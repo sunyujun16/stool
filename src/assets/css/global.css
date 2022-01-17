@@ -1,0 +1,25 @@
+.noticeMsg {
+    /*background-color: rgba(0, 3, 2, 0.8);*/
+    color: black;
+}
+
+.el-message--success {
+    background-color: rgba(0, 0, 0, 0.7);
+    border-radius: 10px;
+    border-color: rgba(204,196,153,0.5);
+}
+
+.el-message--error {
+    background-color: rgba(0, 0, 0, 0.7);
+    border-radius: 10px;
+    border-color: rgba(204,196,153,0.5);
+}
+
+
+.el-message__content {
+    color: black;
+}
+
+.el-message {
+    min-width: 200px;
+}

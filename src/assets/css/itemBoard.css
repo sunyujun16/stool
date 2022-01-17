@@ -1,0 +1,96 @@
+.item-div {
+    border-radius: 10px;
+    font-weight: bold;
+    font-size: 32px;
+    color: #449999;
+    position: relative;
+    float: left;
+    margin-right: 60px;
+    width: 320px;
+    height: 400px;
+    /*background-color: rgba(68, 153, 153, 0.5);*/
+    margin-left: 20px;
+    overflow: hidden;
+
+    background: linear-gradient(315deg, rgb(165, 157, 115), rgba(204,196,153,0.6));
+    box-shadow: -3px -3px 10px rgba(76, 66, 20, 0.5),
+    3px 3px 10px rgba(226, 218, 183, 0.5);
+    /*background: linear-gradient(315deg, rgba(160, 165, 115, 0.8), rgba(204,196,153,0.3));*/
+    /*box-shadow: -3px -3px 10px rgba(76, 66, 20, 0.5),*/
+    /*3px 3px 10px rgba(226, 218, 183, 0.5);*/
+}
+
+.imgOutRange {
+    float: left;
+    opacity: 0.6;
+    position: relative;
+    width: 100%;
+    object-fit: contain; /*img背景关键属性*/
+    transition: all 0.2s;
+}
+
+.imgInRange {
+    opacity: 1;
+    transition: all 0.2s;
+    float: left;
+    position: relative;
+    width: 100%;
+    object-fit: contain; /*img背景关键属性*/
+}
+
+.item-div > img:active {
+    opacity: 0.85;
+}
+
+
+/*#zukeItem > img {*/
+/*    float: left;*/
+/*    opacity: 0.2;*/
+/*    position: relative;*/
+/*    width: inherit;*/
+/*    object-fit: contain; !*img背景关键属性*!*/
+/*    transition: all 0.2s;*/
+/*}*/
+
+/*#zukeItem > img:hover {*/
+/*    opacity: 1;*/
+/*    transition: all 0.2s;*/
+/*}*/
+
+.itemText {
+    float: left;
+    position: relative;
+    top: -250px;
+    left: 100px;
+    /*color: #CCFFCC;*/
+    text-shadow: -4px -4px 10px #5a563c, 4px 4px 10px #e7e6cd;
+    font-weight: 100;
+    color: rgba(204, 196, 153, 1);
+    /*font-family: ;*/
+    /*font-size: ;*/
+    transition: all 0.1s;
+    user-select:none
+}
+
+.itemText:hover {
+    cursor: default;
+    text-shadow: -5px -5px 12px #5a563c, 5px 5px 12px #e7e6cd;
+    font-weight: 200;
+    color: rgb(246, 238, 192);
+    transition: all 0.1s;
+}
+.itemText:active {
+    cursor: default;
+    text-shadow: -5px -5px 12px #5a563c, 5px 5px 12px #e7e6cd;
+    font-weight: 200;
+    color: rgb(246, 238, 192);
+    background-color: rgba(1, 1, 1, 0.5);
+    border-radius: 5px;
+    padding: 3px;
+    transition: all 0.1s;
+}
+
+#todoItem {
+    margin-left: 20%;
+
+}
