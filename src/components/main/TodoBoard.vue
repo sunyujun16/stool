@@ -18,6 +18,8 @@ export default {
   mixins: [itemImgMix,],
   methods: {
     pushToTodoList(){
+      // todo 登录判断，这里应该用router的 全局守卫 才合适我觉得。不过算了，跳转比较少。
+
       this.$bus.$emit('jumpToTodoList')
     }
   }

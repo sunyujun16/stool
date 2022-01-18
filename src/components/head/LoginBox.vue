@@ -143,9 +143,9 @@ export default {
 
         if (valid) {
           // alert('submit!');
-          let url = this.$store.state.zukeOptions.zukeHost + '/login';
+          let url = this.$store.state.todoOptions.todoHost + '/login';
           let _this = this;
-          // 发送axios请求/POST,访问登录页，返回啥呢？返回一个token？sessionId？
+          // 发送axios请求/POST,访问登录页，返回啥呢？返回一个user对象
           if (this.consts.CONSOLE) console.log("发送请求：")
           this.$axios.post(url,
               {

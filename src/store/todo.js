@@ -7,7 +7,7 @@ const todoOptions = {
 
     },
     state: {
-
+        todoHost: "http://localhost:8080"
     },
     getters: {
 

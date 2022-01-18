@@ -58,13 +58,14 @@ export default {
     todos: {
       deep: true,
       handler(value) {
-        localStorage.setItem('todos', JSON.stringify(value))
+        // if (!this.$store.state.globalOptions.login)
+          localStorage.setItem('todos', JSON.stringify(value))
       }
     }
   },
   // 此时页面中呈现的DOM不是Vue的DOM，此时Vue的虚拟DOM还在后边摸鱼，没有转换成真实DOM
   beforeMount() {
-    // 从storage中读取todos
+    // 从localStorage中读取todos
     // let todos = localStorage.getItem('todos');
     // if (!todos) {
     //   todos = [
@@ -75,19 +76,38 @@ export default {
     // }
     // this.todos = JSON.parse(todos)
     // console.log(this.todos)
+    if (!this.$store.state.globalOptions.login) {
+      // 未登录，提示一下
+      this.$message({
+        message: '建议注册登录后使用，否则数据只保存在本地磁盘，可能会被误清理',
+        type: 'error',
+        duration: 3500,
+        showClose: true,
+        center: true,
+        offset: 200,
+      })
+      // 然后读取本地存储
+      let parseTodos = JSON.parse(localStorage.getItem("todos"));
+      this.todos = parseTodos ? parseTodos : []
+      if (!parseTodos || parseTodos.length === 0)
+        this.$message({
+          message: '本地缓存为空',
+          type: 'error',
+          offset: 60,
+        })
+    } else {
+      // 向stool服务端请求itemList数据
+      let url = this.$store.state.todoOptions.todoHost + "/list-item";
+      this.$axios.get(url).then(
+          response => {
+            this.todos = response.data
+          },
+          error => {
+            alert("请求错误: " + error.message)
+          }
+      )
+    }
 
-    // 动真格的了，向8080端口请求数据，路径/test
-    this.$axios.get("http://localhost:8080/test").then(
-        response => {
-          // 报错，因为response.data本来就是数组对象，而不是JSON字符串。唔...
-          // this.todos = JSON.parse(response.data)
-          // 有点懵逼了，什么时候使用JSON，什么时候不用JSON呢？应该是：从文件读取JSON字符串，或者后端明确地发送JSON数据。一会儿试试。
-          this.todos = response.data
-        },
-        error => {
-          alert("跨域请求错误，我的我的~")
-        }
-    )
   },
   mounted() {
     // 给总线绑定添加事件，和要触发的回调函数。
