@@ -2,19 +2,19 @@ import Vue from "vue";
 import VueRouter from "vue-router";
 Vue.use(VueRouter)
 
-// import ours Components
+// import our Components
 import TodoApp from "@/views/TodoApp";
-import App from "@/App";
 import BoardsZone from "@/components/main/BoardsZone";
+import Blank from "@/components/blank/Blank";
 
 // create a router and expose it
 export default new VueRouter({
     routes:[
-        // {
-        //     path: '/',
-        //     name: 'main',
-        //     redirect: 'board-zone'
-        // },
+        {
+            path: '/',
+            name: 'main',
+            redirect: 'board-zone'
+        },
         {
             name: 'todoApp',
             path: '/todoApp',
@@ -22,9 +22,14 @@ export default new VueRouter({
         },
         {
             name: 'board-zone',
-            path: '/',
+            path: '/board-zone',
             component: BoardsZone
 
         },
+        {
+            name: 'blank',
+            path: '/blank',
+            component: Blank
+        }
     ]
 })

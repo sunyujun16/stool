@@ -167,6 +167,11 @@ export default {
             this.LOGIN(true);
             if (this.consts.CONSOLE) console.log(this.userInfo.user_privilege)
 
+            // todo 刷新当前视图，这样，如果在todoApp中，能够触发beforeMounted钩子。
+            // this.$router.go(0); // 不行，state会被刷新掉，除非保存到localStorage或sessionStorage
+            // this.$router.push("")
+            this.$bus.$emit("jumpToBlank")
+
           }).catch(error => {
             if (this.consts.CONSOLE) console.log("错误叻！" + error)
             // 没必要

@@ -59,7 +59,9 @@ export default {
       deep: true,
       handler(value) {
         // if (!this.$store.state.globalOptions.login)
-          localStorage.setItem('todos', JSON.stringify(value))
+        // 不要上面的判断，是因为，无论如何都要在本地存储一份，以备离线使用。那么就要求：
+        // 每次登录时检查数据库的数据是否和本地一致，如果不一致，还需要对数据库进行更新。
+        localStorage.setItem('todos', JSON.stringify(value))
       }
     }
   },
@@ -96,16 +98,35 @@ export default {
           offset: 60,
         })
     } else {
-      // 向stool服务端请求itemList数据
+      // 已登录，先向stool服务端请求itemList数据，并且拿到localStorage。
       let url = this.$store.state.todoOptions.todoHost + "/list-item";
       this.$axios.get(url).then(
           response => {
             this.todos = response.data
+            // 拿到localStorage
+            let localTodos = JSON.parse(localStorage.getItem("todos"));
+            // 判断是否一致
+            if (this.todos === localTodos){
+              alert("一致")
+            }
+
           },
           error => {
             alert("请求错误: " + error.message)
           }
       )
+
+
+
+      // 弹窗决定是否覆盖当前内容
+
+
+
+
+
+
+
+
     }
 
   },

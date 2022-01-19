@@ -41,15 +41,19 @@ export default {
         name: 'todoApp',
       })
     },
-    verifyLogIn() {
-
-    },
+    jumpToBlank(){
+      this.$router.push({
+        name: 'blank',
+      })
+    }
   },
   mounted() {
-    this.$bus.$on("jumpToTodoList", this.jumpToTodoList)
+    this.$bus.$on("jumpToTodoList", this.jumpToTodoList);
+    this.$bus.$on("jumpToBlank", this.jumpToBlank);
   },
   beforeDestroy() {
-    this.$bus.$off("jumpToTodoList")
+    this.$bus.$off("jumpToTodoList");
+    this.$bus.$off("jumpToBlank");
   }
 }
 </script>

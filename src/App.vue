@@ -6,11 +6,11 @@
         <MainPart/>
         <Footer/>
       </el-container>
-
-
     </div>
+<!--    <img src="./assets/img/benaja-germann-QbdzCEXy5vs-unsplash-021.jpg" alt="nah" class="background-img" id="fuck"-->
+<!--         :style="imgStyle" ref="backImg"> &lt;!&ndash;    &ndash;&gt;-->
     <img src="./assets/img/benaja-germann-QbdzCEXy5vs-unsplash-021.jpg" alt="nah" class="background-img" id="fuck"
-         :style="imgStyle" ref="backImg"> <!--    -->
+         > <!--    -->
   </div>
 </template>
 
@@ -31,27 +31,27 @@ export default {
   },
   data() {
     return {
-      winWidth: document.documentElement.clientWidth,
-      winHeight: document.documentElement.clientHeight,
+      // winWidth: document.documentElement.clientWidth,
+      // winHeight: document.documentElement.clientHeight,
     }
   },
   computed: {
-    imgStyle() {
-      return {
-        width: this.winWidth + 'px',
-        height: this.winHeight + 'px'
-      }
-    }
+    // imgStyle() {
+    //   return {
+    //     width: this.winWidth + 'px',
+    //     height: this.winHeight + 'px'
+    //   }
+    // }
   },
   mounted() {
     // if (this.consts.CONSOLE) console.log(this.$router)
     // if (this.consts.CONSOLE) console.log("Vue @ @ @ ", this)
     // if (!this.consts.CONSOLE) console.log("Fuck whom?")
-    let _this = this;
-    window.onresize = function () { // 定义窗口大小变更通知事件
-      _this.winWidth = document.documentElement.clientWidth; //窗口宽度
-      _this.winHeight = document.documentElement.clientHeight; //窗口高度
-    };
+    // let _this = this;
+    // window.onresize = function () { // 定义窗口大小变更通知事件
+    //   _this.winWidth = document.documentElement.clientWidth; //窗口宽度
+    //   _this.winHeight = document.documentElement.clientHeight; //窗口高度
+    // };
   },
   watch: {}
 }

@@ -58,6 +58,14 @@ export default {
           'TAB_DIALOGFORMVISIBLE_REGISTER']),
     ...mapMutations("globalOptions", ['SET_USER_INFO','CLEAR_USER_INFO','LOGOUT']),
     logout(){
+      // 把数据同步到数据库
+
+
+      this.$message({
+        type: "success",
+        message: '数据已保存到云端，现在进入离线模式',
+        // offset: 3000,
+      })
       // 退出登录，修改login状态，清除全局userInfo
       this.LOGOUT();
       this.CLEAR_USER_INFO();
