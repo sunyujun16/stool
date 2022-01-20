@@ -11,7 +11,7 @@
                @open="onOpen">
       <!--      注意ref属性和v-model保持一致-->
       <el-form :model="ruleForm" status-icon :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
-        <el-form-item label="用户名" prop="userName" >
+        <el-form-item label="用户名" prop="userName">
           <el-input type="text" v-model="ruleForm.userName"></el-input>
         </el-form-item>
 
@@ -117,7 +117,7 @@ export default {
   },
   computed: {
     ...mapState("headOptions", {dialogFormVisible: 'dialogFormVisible_login'}),
-    ...mapState("globalOptions", ['login','userInfo']),
+    ...mapState("globalOptions", ['login', 'userInfo']),
     // 用表单注意这，不能图省事，必须写set方法
     dialogFormVisible_local: {
       get() {
@@ -130,55 +130,19 @@ export default {
   },
   methods: {
     ...mapMutations("headOptions", ['TAB_DIALOGFORMVISIBLE_LOGIN']),
-    ...mapMutations("globalOptions", ['SET_USER_INFO','CLEAR_USER_INFO','LOGIN']),
+    ...mapMutations("globalOptions", ['SET_USER_INFO', 'CLEAR_USER_INFO', 'LOGIN']),
     onOpen() {
       // 修改登录界面的主题颜色等。放弃了，bug太多，还不如自己写。
       // this.customDialogStyle();
     },
     submitForm(formName) {
-      // console.log(this.$refs[formName])
       // valid的来源 --- 它是一个布尔值，取决于上面定义的rules指定的方法是否全部通过而没有发生callback（Error）
       this.$refs[formName].validate((valid) => {
-        if (this.consts.CONSOLE) console.log("验证结果：", valid)
-
+        if (this.consts.CONSOLE) console.log("验证结果：valid = ", valid)
         if (valid) {
-          // alert('submit!');
           let url = this.$store.state.todoOptions.todoHost + '/login';
-          let _this = this;
-          // 发送axios请求/POST,访问登录页，返回啥呢？返回一个user对象
-          if (this.consts.CONSOLE) console.log("发送请求：")
-          this.$axios.post(url,
-              {
-                username: this.ruleForm.userName,
-                password: md5(this.ruleForm.pass),
-              }
-          ).then(response => {
-            console.log("收到响应，状态码：" + response.status)
-            // 修改对应login状态的state
-            this.$store.dispatch('globalOptions/login', true);
-            // 退出登录窗口
-            this.TAB_DIALOGFORMVISIBLE_LOGIN(false);
-            // 设置全局用户信息和login状态。
-            if (this.consts.CONSOLE) console.log(response.data)
-            let username = response.data.username;
-            let privilege = response.data['privilege'];
-            if (this.consts.CONSOLE) console.log(privilege)
-            this.SET_USER_INFO({username:username, privilege:privilege, avatar_url:''});
-            this.LOGIN(true);
-            if (this.consts.CONSOLE) console.log(this.userInfo.user_privilege)
-
-            // todo 刷新当前视图，这样，如果在todoApp中，能够触发beforeMounted钩子。
-            // this.$router.go(0); // 不行，state会被刷新掉，除非保存到localStorage或sessionStorage
-            // this.$router.push("")
-            this.$bus.$emit("jumpToBlank")
-
-          }).catch(error => {
-            if (this.consts.CONSOLE) console.log("错误叻！" + error)
-            // 没必要
-            // this.$store.dispatch('globalOptions/logout');
-          })
-
-
+          if (this.consts.CONSOLE) console.log("开始发送请求：", url)
+          this.getItemListFromServer(url)
         } else {
           if (this.consts.CONSOLE) console.log('error submit!!');
           this.$message({
@@ -190,10 +154,56 @@ export default {
         }
       });
     },
+    getItemListFromServer(url) {
+      // 发送axios请求/POST,访问登录页，返回啥呢？返回一个user对象
+      this.$axios.post(url,
+          {
+            username: this.ruleForm.userName,
+            password: md5(this.ruleForm.pass),
+          }
+      ).then(response => {
+        console.log("收到响应，状态码：" + response.status)
+        // 修改对应login状态的state
+        this.$store.dispatch('globalOptions/login', true);
+        // 退出登录窗口
+        this.TAB_DIALOGFORMVISIBLE_LOGIN(false);
+        // 设置全局用户信息和login状态。
+        this.SET_USER_INFO({
+          username: response.data.username,
+          privilege: response.data.username,
+          avatar_url: ''
+        });
+        this.LOGIN(true);
+        // todos数据的赋值和显示，分类讨论 一二三四
+        // 准备：先读取localStorage
+
+
+        // 一、local为空，则直接读取服务器数据
+
+
+        // 二、local不空，服务器为空（应该不会），以local为准
+
+        // 三、local和服务器均不空，且一致，服务器数据直接保存
+
+        // 四、local和服务器均不空，且不一致，confirm，让用户进行选择。
+
+
+        // 刷新当前视图，这样，如果在todoApp中，能够触发beforeMounted钩子，来保证重读数据。
+        // this.$router.go(0); // 不行，state会被刷新掉，除非保存到localStorage或sessionStorage
+        // this.$router.push("/blank") // 可行，在blank中跟下面的方式一样，配置两个钩子再次跳转即可
+        this.$bus.$emit("jumpToBlank")
+
+      }).catch(error => {
+        if (this.consts.CONSOLE) console.log("登录错误叻！" + error)
+        // 没必要
+        // this.$store.dispatch('globalOptions/logout');
+      })
+
+    },
     resetForm(formName) {
       this.$refs[formName].resetFields();
     },
-    /** @deprecated */
+    /** @deprecated 真sb，浪费感情，艹，组件真的不能瞎jb改*/
     customDialogStyle() {
       let el_dialogs = document.getElementsByClassName("el-dialog");
       let el_dialog_titles = document.getElementsByClassName("el-dialog__title");

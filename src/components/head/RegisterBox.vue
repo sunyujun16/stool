@@ -8,7 +8,7 @@
                width="30%"
                :top="'20vh'"
                :custom-class="'myDialog'"
-               >
+    >
       <!--      注意ref属性和v-model保持一致-->
       <el-form :model="ruleForm" status-icon :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
         <el-form-item label="用户名" prop="userName">
@@ -20,7 +20,8 @@
         </el-form-item>
 
         <el-form-item label="确认密码" prop="checkPass">
-          <el-input type="password" v-model="ruleForm.checkPass" autocomplete="off"></el-input>
+          <el-input type="password" v-model="ruleForm.checkPass" autocomplete="off"
+                    @keyup.enter.native="submitForm('ruleForm')"></el-input>
         </el-form-item>
 
         <el-form-item>
@@ -65,11 +66,11 @@ export default {
       if (pwd === '') {
         callback(new Error('请输入密码'));
       }
-      // else if (this.ruleForm.checkPass !== '') {
-      //     if (this.consts.CONSOLE) console.log(pwd + " ------ pass01底层验证1 ------")
-      //     this.$refs.ruleForm.validateField('checkPass');
-      //     if (this.consts.CONSOLE) console.log(pwd + " ------ pass01底层验证2 ------")
-      //   callback();
+          // else if (this.ruleForm.checkPass !== '') {
+          //     if (this.consts.CONSOLE) console.log(pwd + " ------ pass01底层验证1 ------")
+          //     this.$refs.ruleForm.validateField('checkPass');
+          //     if (this.consts.CONSOLE) console.log(pwd + " ------ pass01底层验证2 ------")
+          //   callback();
       // }
       else {
         if (this.consts.CONSOLE) console.log('密码1校验结束')

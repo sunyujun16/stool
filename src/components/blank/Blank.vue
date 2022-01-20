@@ -1,27 +1,27 @@
 <template>
-<div style="color: #ccc499">
-  数据加载中 ......
-</div>
+  <div style="color: #ccc499">
+    数据加载中 ......
+  </div>
 </template>
 
 <script>
 export default {
   name: "Blank",
-  data(){
+  data() {
     return {
-      fromPath:'haha',
+      fromPath: 'haha',
     }
   },
   mounted() {
     // alert('正搁那儿跳转......')
     setTimeout(() => {
+      this.$router.push({
+        path: this.fromPath
+      })
+    }, 1000)
 
-    },1000)
-    this.$router.push({
-      path: this.fromPath
-    })
   },
-  beforeRouteEnter (to, from, next) {
+  beforeRouteEnter(to, from, next) {
     next(vm => {
       if (vm.consts.CONSOLE) console.log(from)
       vm.fromPath = from.path;
