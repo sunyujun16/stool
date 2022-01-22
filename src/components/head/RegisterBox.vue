@@ -153,7 +153,7 @@ export default {
             this.TAB_DIALOGFORMVISIBLE_REGISTER(false)
             // 弹出登录页
             this.$store.commit('headOptions/TAB_DIALOGFORMVISIBLE_LOGIN', true)
-            // this.$store.dispatch('globalOptions/login', true);
+            // this.$store.dispatch('globalOptions/sendLogin', true);
           }).catch(error => {
             if (this.consts.CONSOLE) console.log("错误叻！" + error)
             // 提示一下注册失败

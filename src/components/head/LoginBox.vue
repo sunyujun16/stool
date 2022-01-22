@@ -9,7 +9,7 @@
                :top="'20vh'"
                :custom-class="'myDialog'"
                @open="onOpen">
-      <!--      注意ref属性和v-model保持一致-->
+      <!--注意ref属性和v-model保持一致-->
       <el-form :model="ruleForm" status-icon :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
         <el-form-item label="用户名" prop="userName">
           <el-input type="text" v-model="ruleForm.userName"></el-input>
@@ -140,9 +140,9 @@ export default {
       this.$refs[formName].validate((valid) => {
         if (this.consts.CONSOLE) console.log("验证结果：valid = ", valid)
         if (valid) {
-          let url = this.$store.state.todoOptions.todoHost + '/login';
+          let url = this.$store.state.todoOptions.todoHost + '/sendLogin';
           if (this.consts.CONSOLE) console.log("开始发送请求：", url)
-          this.getItemListFromServer(url)
+          this.sendLogin(url)
         } else {
           if (this.consts.CONSOLE) console.log('error submit!!');
           this.$message({
@@ -154,8 +154,8 @@ export default {
         }
       });
     },
-    getItemListFromServer(url) {
-      // 发送axios请求/POST,访问登录页，返回啥呢？返回一个user对象
+    sendLogin(url) {
+      // 发送axios请求/POST,访问登录页，返回一个user对象
       this.$axios.post(url,
           {
             username: this.ruleForm.userName,
@@ -164,41 +164,28 @@ export default {
       ).then(response => {
         console.log("收到响应，状态码：" + response.status)
         // 修改对应login状态的state
-        this.$store.dispatch('globalOptions/login', true);
-        // 退出登录窗口
-        this.TAB_DIALOGFORMVISIBLE_LOGIN(false);
-        // 设置全局用户信息和login状态。
+        this.LOGIN(true);
+        // 设置全局用户信息。
         this.SET_USER_INFO({
           username: response.data.username,
           privilege: response.data.username,
           avatar_url: ''
         });
-        this.LOGIN(true);
-        // todos数据的赋值和显示，分类讨论 一二三四
-        // 准备：先读取localStorage
-
-
-        // 一、local为空，则直接读取服务器数据
-
-
-        // 二、local不空，服务器为空（应该不会），以local为准
-
-        // 三、local和服务器均不空，且一致，服务器数据直接保存
-
-        // 四、local和服务器均不空，且不一致，confirm，让用户进行选择。
-
-
-        // 刷新当前视图，这样，如果在todoApp中，能够触发beforeMounted钩子，来保证重读数据。
-        // this.$router.go(0); // 不行，state会被刷新掉，除非保存到localStorage或sessionStorage
-        // this.$router.push("/blank") // 可行，在blank中跟下面的方式一样，配置两个钩子再次跳转即可
-        this.$bus.$emit("jumpToBlank")
-
+        // 退出登录窗口
+        this.TAB_DIALOGFORMVISIBLE_LOGIN(false);
+        // 刷新页面
+        this.refreshComponent();
       }).catch(error => {
-        if (this.consts.CONSOLE) console.log("登录错误叻！" + error)
-        // 没必要
-        // this.$store.dispatch('globalOptions/logout');
+        alert("登录失败，错误码: " + error.status + "，错误信息: " + error.message)
       })
-
+    },
+    /**
+     * 跳转到blank再回来，实现刷新（触发当前页面的beforeMounted钩子）
+     * */
+    refreshComponent(){
+      // this.$router.go(0); // 不行，state会被刷新掉，除非保存到localStorage或sessionStorage
+      // this.$router.push("/blank") // 可行，在blank中跟下面的方式一样，配置两个钩子再次跳转即可
+      this.$bus.$emit("jumpToBlank")
     },
     resetForm(formName) {
       this.$refs[formName].resetFields();

@@ -58,7 +58,7 @@ export default {
     todos: {
       deep: true,
       handler(value) {
-        // if (!this.$store.state.globalOptions.login)
+        // if (!this.$store.state.globalOptions.sendLogin)
         // 不要上面的判断，是因为，无论如何都要在本地存储一份，以备离线使用。那么就要求：
         // 每次登录时检查数据库的数据是否和本地一致，如果不一致，还需要对数据库进行更新。
         localStorage.setItem('todos', JSON.stringify(value))
@@ -67,19 +67,8 @@ export default {
   },
   // 此时页面中呈现的DOM不是Vue的DOM，此时Vue的虚拟DOM还在后边摸鱼，没有转换成真实DOM
   beforeMount() {
-    // 从localStorage中读取todos
-    // let todos = localStorage.getItem('todos');
-    // if (!todos) {
-    //   todos = [
-    //     {id: "001", title: "初始化事务", done: false},
-    //   ]
-    //   this.todos = todos
-    //   return
-    // }
-    // this.todos = JSON.parse(todos)
-    // console.log(this.todos)
     if (!this.$store.state.globalOptions.login) {
-      // 未登录，提示一下
+      // 未登录，则提示一下
       this.$message({
         message: '建议注册登录后使用，否则数据只保存在本地磁盘，可能会被误清理',
         type: 'error',
@@ -97,37 +86,43 @@ export default {
           type: 'error',
           offset: 60,
         })
-    } else {
-      // 已登录，先向stool服务端请求itemList数据，并且拿到localStorage。
-      let url = this.$store.state.todoOptions.todoHost + "/list-item";
-      this.$axios.get(url).then(
-          response => {
-            this.todos = response.data
-            // 拿到localStorage
-            let localTodos = JSON.parse(localStorage.getItem("todos"));
-            // 判断是否一致
-            if (this.todos === localTodos){
-              alert("一致")
-            }
-
-          },
-          error => {
-            alert("请求错误: " + error.message)
-          }
-      )
-
-
-
-      // 弹窗决定是否覆盖当前内容
-
-
-
-
-
-
-
-
     }
+    // 已登录，先向stool服务端请求itemList数据，并且拿到localStorage。
+    let url = this.$store.state.todoOptions.todoHost + "/list-item";
+    this.$axios.get(url).then(
+        response => {
+          // 分别获取本地和服务器的数据，以便比较。
+          let localTodos = JSON.parse(localStorage.getItem("todos"));
+          let serverTodos = response.data;
+          // 分类讨论:
+          if (!localTodos || localTodos.length === 0) {
+            // 一、local为空，则直接读取服务器数据
+            this.todos = serverTodos;
+          } else if (!serverTodos || serverTodos.length === 0) {
+            // 二、local非空，但服务器为空，以local为准
+            this.todos = localTodos;
+          } else {
+            if (localTodos === serverTodos) {
+              // 三、local和服务器均不空，且一致，服务器数据直接保存
+              this.todos = serverTodos;
+            } else {
+              // 四、local和服务器均不空，且不一致，confirm，让用户进行选择。
+              if (confirm("本地和服务器数据不一致，是否用本地覆盖云端？选否则用云端覆盖本地")) {
+                this.todos = localTodos;
+              } else {
+                this.todos = serverTodos;
+                // 至此，todos数据建立完成，可以进行增删改查了。
+              }
+            }
+          }
+        },
+        error => {
+          alert("请求错误: " + error.message)
+        }
+    )
+
+    // 弹窗决定是否覆盖当前内容
+
 
   },
   mounted() {
