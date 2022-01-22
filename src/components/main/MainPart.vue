@@ -47,13 +47,20 @@ export default {
       })
     }
   },
+  jumpToMain(){
+    this.$router.push({
+      name: 'main',
+    })
+  },
   mounted() {
     this.$bus.$on("jumpToTodoList", this.jumpToTodoList);
     this.$bus.$on("jumpToBlank", this.jumpToBlank);
+    this.$bus.$on("jumpToMain", this.jumpToMain);
   },
   beforeDestroy() {
     this.$bus.$off("jumpToTodoList");
     this.$bus.$off("jumpToBlank");
+    this.$bus.$off("jumpToMain");
   }
 }
 </script>

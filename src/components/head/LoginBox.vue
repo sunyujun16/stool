@@ -140,7 +140,7 @@ export default {
       this.$refs[formName].validate((valid) => {
         if (this.consts.CONSOLE) console.log("验证结果：valid = ", valid)
         if (valid) {
-          let url = this.$store.state.todoOptions.todoHost + '/sendLogin';
+          let url = this.$store.state.todoOptions.todoHost + '/login';
           if (this.consts.CONSOLE) console.log("开始发送请求：", url)
           this.sendLogin(url)
         } else {

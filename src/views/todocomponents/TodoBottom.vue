@@ -57,7 +57,7 @@ export default {
     },
     saveAndQuit(){
       // if (confirm("宁确定要退出吗？"))
-        this.$router.back()
+        this.$bus.$emit("jumpToMain")
 
     }
     // selectAll() {
