@@ -41,16 +41,16 @@ export default {
         name: 'todoApp',
       })
     },
-    jumpToBlank(){
+    jumpToBlank() {
       this.$router.push({
         name: 'blank',
       })
-    }
-  },
-  jumpToMain(){
-    this.$router.push({
-      name: 'main',
-    })
+    },
+    jumpToMain() {
+      this.$router.push({
+        name: 'main',
+      })
+    },
   },
   mounted() {
     this.$bus.$on("jumpToTodoList", this.jumpToTodoList);
