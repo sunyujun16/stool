@@ -18,7 +18,7 @@ export default {
       this.$router.push({
         path: this.fromPath
       })
-    }, 1000)
+    }, 100)
 
   },
   beforeRouteEnter(to, from, next) {

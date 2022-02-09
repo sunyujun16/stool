@@ -1,4 +1,5 @@
 {
   "NANO_SIZE": 11,
-  "CONSOLE": true
+  "CONSOLE": true,
+  "SAVE_INTERVAL": 600000
 }

@@ -89,7 +89,6 @@ export default {
         // 这句没用了，因为todos一定会修改
         // this.onWithDraw = false; // 归零之后不会再修改todos所以这里要set一下，否则一旦归零导致onWithDraw还是true，stack不会添东西。
       }
-
       // if (this.consts.CONSOLE) console.log("set false ~")
       // 不在这里设置FALSE，因为watch是在此后执行的，如果在此设置为false，那就完全是脱了裤子放屁
       // this.onWithDraw = false;
@@ -100,7 +99,6 @@ export default {
       deep: true,
       handler(value) {
         if (this.consts.CONSOLE) console.log("监测到todos变化 ...")
-
         // 每次修改都更新localStorage
         localStorage.setItem('todos', JSON.stringify(value));
         // 判断是不是正在撤销，如果不是，添加stack

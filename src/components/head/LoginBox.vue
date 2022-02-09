@@ -130,7 +130,7 @@ export default {
   },
   methods: {
     ...mapMutations("headOptions", ['TAB_DIALOGFORMVISIBLE_LOGIN']),
-    ...mapMutations("globalOptions", ['SET_USER_INFO', 'CLEAR_USER_INFO', 'LOGIN']),
+    ...mapMutations("globalOptions", ['SET_USER_INFO', 'CLEAR_USER_INFO', 'LOGIN','SET_SESSIONID']),
     onOpen() {
       // 修改登录界面的主题颜色等。放弃了，bug太多，还不如自己写。
       // this.customDialogStyle();
@@ -168,7 +168,8 @@ export default {
         // 设置全局用户信息。
         this.SET_USER_INFO({
           username: response.data.username,
-          privilege: response.data.username,
+          userId: response.data.id,
+          privilege: response.data.privilege,
           avatar_url: ''
         });
         // 退出登录窗口

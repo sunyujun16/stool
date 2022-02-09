@@ -32,24 +32,31 @@ const globalOptions = {
         },
         SET_USER_INFO(state, valueObj) {
           state.userInfo.username = valueObj.username;
+          state.userInfo.userId = valueObj.userId;
           state.userInfo.user_privilege = valueObj.privilege;
           state.userInfo.avatar_url = valueObj.avatar_url;
         },
         CLEAR_USER_INFO(state){
             state.userInfo = {
                 username: '',
+                userId: 0,
                 user_privilege: 2,
                 avatar_url: '',
             }
+        },
+        SET_SESSIONID(state, sessionId){
+            state.sessionId = sessionId
         }
     },
     state: {
         login: false,
         userInfo: {
             username: '',
+            userId: 0,
             user_privilege: '2',
             avatar_url: '',
-        }
+        },
+        sessionId:''
     },
     getters: {
 
