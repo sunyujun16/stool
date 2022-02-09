@@ -110,10 +110,22 @@ export default {
         //     }
         // );
 
+        /*
+        几点注意：
+        1、contentType设置后，浏览器会先发送OPTIONS请求，所以后端的登录拦截器要放行一下
+        2、JSON.stringify的使用是必须的
+        3、跨域问题是后端解决的，前端只要保证请求带上cookie和参数即可。
+        4、axios仍然不会携带cookie，不对它抱有幻想了，草他娘的。
+         */
         $.ajax({
           type: "POST",
           url: url,
-          dataType: 'jsonp',
+          data:JSON.stringify({
+            itemList: this.todos,
+            userId: this.$store.state.globalOptions.userInfo.userId
+          }),
+          dataType: 'json',
+          contentType: 'application/json',
           xhrFields: {
             withCredentials: true
           },
