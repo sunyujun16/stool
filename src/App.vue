@@ -7,10 +7,10 @@
         <Footer/>
       </el-container>
     </div>
-<!--    <img src="./assets/img/benaja-germann-QbdzCEXy5vs-unsplash-021.jpg" alt="nah" class="background-img" id="fuck"-->
-<!--         :style="imgStyle" ref="backImg"> &lt;!&ndash;    &ndash;&gt;-->
+    <!--    <img src="./assets/img/benaja-germann-QbdzCEXy5vs-unsplash-021.jpg" alt="nah" class="background-img" id="fuck"-->
+    <!--         :style="imgStyle" ref="backImg"> &lt;!&ndash;    &ndash;&gt;-->
     <img src="./assets/img/benaja-germann-QbdzCEXy5vs-unsplash-021.jpg" alt="nah" class="background-img" id="fuck"
-         > <!--    -->
+    > <!--    -->
   </div>
 </template>
 
@@ -42,6 +42,15 @@ export default {
     //     height: this.winHeight + 'px'
     //   }
     // }
+  },
+  beforeMount() {
+    // 刷新页面，加载程序，此时判断是否已经登录
+    let userInfo = sessionStorage.getItem("userInfo");
+    if (userInfo) {
+      // 修改store的UserInfo信息
+      this.$store.commit('globalOptions/SET_USER_INFO', JSON.parse(userInfo))
+      this.$store.commit('globalOptions/LOGIN')
+    }
   },
   mounted() {
     // if (this.consts.CONSOLE) console.log(this.$router)

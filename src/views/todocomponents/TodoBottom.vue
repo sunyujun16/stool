@@ -23,16 +23,21 @@ export default {
   name: "TodoBottom",
   props: ['todos'],
   mounted() {
-    // this.saveTimer = setInterval(this.saveToServer, this.consts.SAVE_INTERVAL)
+    // 自动保存，先关掉
     // this.saveTimer = setInterval(() => {
     //   if (this.$store.state.globalOptions.login) { // 仅在登录状态下进行保存操作
     //     this.saveToServer()
     //     this.$message.success("自动保存")
     //   }
-    // }, 10000)
+    // }, this.consts.SAVE_INTERVAL)
+
+    // 上车
+    this.$bus.$on("saveToServer", this.saveToServer)
+
   },
   beforeDestroy() {
     clearInterval(this.saveTimer)
+    this.$bus.$off("saveToServer")
   },
   data() {
     return {
@@ -74,8 +79,10 @@ export default {
       this.warn = false
     },
     saveAndQuit() {
-      if (confirm("宁确定要退出吗？"))
+      if (confirm("宁确定要退出吗？")){
+        this.saveToServer()
         this.$bus.$emit("jumpToMain")
+      }
     },
     saveToServer() {
       // 判断是否登录
@@ -110,9 +117,19 @@ export default {
         //     }
         // );
 
+        // 添加user信息，避免离线添加的数据缺少username和userId
+        // JS中，for in 取出来的是下标，基础不牢喽，奶奶的。
+        this.todos.forEach(item => {
+          if (!item.username || !item.userId) {
+            console.log(item, '++++++', item.username, "----", item.userId)
+            item.username = this.$store.state.globalOptions.userInfo.username
+            item.userId = this.$store.state.globalOptions.userInfo.userId
+          }
+        })
+
         /*
         几点注意：
-        1、contentType设置后，浏览器会先发送OPTIONS请求，所以后端的登录拦截器要放行一下
+        1、contentType设置为json后，浏览器会先发送OPTIONS请求，所以后端的登录拦截器要放行一下
         2、JSON.stringify的使用是必须的
         3、跨域问题是后端解决的，前端只要保证请求带上cookie和参数即可。
         4、axios仍然不会携带cookie，不对它抱有幻想了，草他娘的。
@@ -120,7 +137,7 @@ export default {
         $.ajax({
           type: "POST",
           url: url,
-          data:JSON.stringify({
+          data: JSON.stringify({
             itemList: this.todos,
             userId: this.$store.state.globalOptions.userInfo.userId
           }),
@@ -130,10 +147,10 @@ export default {
             withCredentials: true
           },
           crossDomain: true,
-          success:function(){
+          success: function () {
             console.log("成功")
           },
-          error:function(){
+          error: function () {
           }
         })
 
@@ -153,13 +170,6 @@ export default {
     withDraw() {
       this.$bus.$emit("justShitIt")
     }
-    // selectAll() {
-    //   // send a boolean msg to App by trigger event
-    //   this.$nextTick(()=> {
-    //     this.$bus.$emit("fuck_setAllOrNeitherDone", this.allSelected)
-    //     console.log(this,this.allSelected)
-    //   })
-    // }
   }
 
 };

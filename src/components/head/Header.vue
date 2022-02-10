@@ -58,8 +58,15 @@ export default {
           'TAB_DIALOGFORMVISIBLE_REGISTER']),
     ...mapMutations("globalOptions", ['SET_USER_INFO','CLEAR_USER_INFO','LOGOUT']),
     logout(){
-      // 把数据同步到数据库
+      // todo_done 把数据同步到数据库
+      // 先判断是否inAPP
+      if (this.$store.state["globalOptions/inTodoApp"]) {
+        // 如果在APP内，则令总线触发saveToServer
+        this.$bus.$emit('saveToServer')
+      }
 
+      // clear sessionStorage
+      sessionStorage.clear()
 
       this.$message({
         type: "success",

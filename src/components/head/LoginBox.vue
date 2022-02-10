@@ -162,7 +162,7 @@ export default {
             password: md5(this.ruleForm.pass),
           }
       ).then(response => {
-        console.log("收到响应，状态码：" + response.status)
+        if (this.consts.CONSOLE) console.log("登录成功，状态码：" + response.status)
         // 修改对应login状态的state
         this.LOGIN(true);
         // 设置全局用户信息。
@@ -172,6 +172,9 @@ export default {
           privilege: response.data.privilege,
           avatar_url: ''
         });
+        // 存储用户信息到sessionStorage当中
+        sessionStorage.setItem("userInfo", JSON.stringify(this.$store.state.globalOptions.userInfo));
+
         // 退出登录窗口
         this.TAB_DIALOGFORMVISIBLE_LOGIN(false);
         // 刷新页面

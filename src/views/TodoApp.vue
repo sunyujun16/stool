@@ -118,6 +118,9 @@ export default {
   },
   // 此时页面中呈现的DOM不是Vue的DOM，此时Vue的虚拟DOM还在后边摸鱼，没有转换成真实DOM
   beforeMount() {
+    // 立flag，进入todoAPP
+    this.$store.commit('globalOptions/ENTER_TODO_APP')
+
     if (!this.$store.state.globalOptions.login) {
       // 未登录，首先提示一下
       this.$message({
@@ -179,6 +182,7 @@ export default {
     }
   },
   mounted() {
+    // 绑定ctrl-z 快捷键。
     let _this = this;
     document.onkeydown = function (event) {
       // console.log(event.key)
@@ -198,6 +202,7 @@ export default {
     this.$bus.$on("justShitIt", this.shiftFromStack)
   },
   beforeDestroy() {
+    this.$store.commit('globalOptions/LEAVE_TODO_APP')
     this.historyStack = [];
     // 把todo写入localStorage，不知道为啥，在这个生命周期无法做这样的事情
     // localStorage.setItem('todos', JSON.stringify(this.todos))

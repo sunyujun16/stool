@@ -13,30 +13,30 @@ import zukeOptions from "@/store/zuke";
 import fa from "element-ui/src/locale/lang/fa";
 
 const globalOptions = {
-    strict:true,
-    namespaced:true,
+    strict: true,
+    namespaced: true,
     actions: {
-        login(context, boolValue){
+        login(context, boolValue) {
             context.commit('LOGIN', boolValue)
         },
-        logout(context){
-           context.commit('LOGOUT', false);
+        logout(context) {
+            context.commit('LOGOUT', false);
         }
     },
     mutations: {
-        LOGIN(state, value){
+        LOGIN(state, value) {
             state.login = true
         },
-        LOGOUT(state){
+        LOGOUT(state) {
             state.login = false
         },
         SET_USER_INFO(state, valueObj) {
-          state.userInfo.username = valueObj.username;
-          state.userInfo.userId = valueObj.userId;
-          state.userInfo.user_privilege = valueObj.privilege;
-          state.userInfo.avatar_url = valueObj.avatar_url;
+            state.userInfo.username = valueObj.username;
+            state.userInfo.userId = valueObj.userId;
+            state.userInfo.user_privilege = valueObj.privilege;
+            state.userInfo.avatar_url = valueObj.avatar_url;
         },
-        CLEAR_USER_INFO(state){
+        CLEAR_USER_INFO(state) {
             state.userInfo = {
                 username: '',
                 userId: 0,
@@ -44,8 +44,14 @@ const globalOptions = {
                 avatar_url: '',
             }
         },
-        SET_SESSIONID(state, sessionId){
+        SET_SESSIONID(state, sessionId) {
             state.sessionId = sessionId
+        },
+        ENTER_TODO_APP(state){
+            state.inTodoApp = true;
+        },
+        LEAVE_TODO_APP(state){
+            state.inTodoApp = false;
         }
     },
     state: {
@@ -56,11 +62,10 @@ const globalOptions = {
             user_privilege: '2',
             avatar_url: '',
         },
-        sessionId:''
+        sessionId: '',
+        inTodoApp: false,
     },
-    getters: {
-
-    }
+    getters: {}
 }
 
 export default new Vuex.Store({

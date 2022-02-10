@@ -28,7 +28,13 @@ export default {
       this.showAddBtn = false
       if (!this.input_value.trim().length > 0) return alert("输入不能为空")
       // create new to-do obj
-      const todoObj = {id: nanoid(consts.NANO_SIZE), title: this.input_value, done: false};
+      const todoObj = {
+        id: nanoid(consts.NANO_SIZE),
+        username: this.$store.state.globalOptions.userInfo.username,
+        userId: this.$store.state.globalOptions.userInfo.userId,
+        title: this.input_value,
+        done: false
+      };
       console.log(todoObj.id, this.input_value)
       // 触发总线事件，给APP发送todoObj
       this.$bus.$emit("fuck_addOneTodo", todoObj);
@@ -56,6 +62,7 @@ export default {
   padding: 4px 7px;
 
 }
+
 .todo-header {
   width: auto;
   text-align: left;
