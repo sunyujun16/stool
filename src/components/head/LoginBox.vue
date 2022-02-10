@@ -38,39 +38,39 @@ export default {
   data() {
     // callback不会停止方法运行, 但是貌似callback只生效一次
     var checkName = (rule, userName, callback) => {
-      if (this.consts.CONSOLE) console.log(userName + " ------ Name校验开始 ------")
-      if (this.consts.CONSOLE) console.log(md5(this.ruleForm.pass));
+      // if (this.consts.CONSOLE) console.log(userName + " ------ Name校验开始 ------")
+      // if (this.consts.CONSOLE) console.log(md5(this.ruleForm.pass));
       if (!userName) {
-        if (this.consts.CONSOLE) console.log(" @callback执行前。。。");
+        // if (this.consts.CONSOLE) console.log(" @callback执行前。。。");
         callback(new Error('用户名不能为空噻'));
         // debugger
         callback(new Error('用户名不能为空噻2333333'));
-        if (this.consts.CONSOLE) console.log(" @callback执行后 - - -")
+        // if (this.consts.CONSOLE) console.log(" @callback执行后 - - -")
         // return false
       }
       setTimeout(() => {
         if (userName.length > 16) {
           callback(new Error('用户名过长'));
-          if (this.consts.CONSOLE) console.log("~用户名过长触发~")
+          // if (this.consts.CONSOLE) console.log("~用户名过长触发~")
         }
         // 正则表达式判断字符合法性
         if (!userName.match(/^[\u4E00-\u9FA5\uF900-\uFA2D|\w]{2,20}$/)) {
           callback(new Error('请使用中文、字母、数字和下划线的组合'))
-          if (this.consts.CONSOLE) console.log("~非法字符触发~");
+          // if (this.consts.CONSOLE) console.log("~非法字符触发~");
         }
       }, 200);
-      if (this.consts.CONSOLE) console.log('用户名校验成功')
+      // if (this.consts.CONSOLE) console.log('用户名校验成功')
       callback();
     };
     var validatePass = (rule, pwd, callback) => {
-      if (this.consts.CONSOLE) console.log(pwd + " ------ pass01开始校验 ------")
+      // if (this.consts.CONSOLE) console.log(pwd + " ------ pass01开始校验 ------")
       if (pwd === '') {
         callback(new Error('请输入密码'));
       } else {
         if (this.ruleForm.checkPass !== '') {
-          if (this.consts.CONSOLE) console.log(pwd + " ------ pass01底层验证1 ------")
+          // if (this.consts.CONSOLE) console.log(pwd + " ------ pass01底层验证1 ------")
           this.$refs.ruleForm.validateField('checkPass');
-          if (this.consts.CONSOLE) console.log(pwd + " ------ pass01底层验证2 ------")
+          // if (this.consts.CONSOLE) console.log(pwd + " ------ pass01底层验证2 ------")
         }
         // callback();
       }
@@ -80,17 +80,17 @@ export default {
       //   callback(new Error("密码最少6位"))
       // }
 
-      if (this.consts.CONSOLE) console.log('密码1校验通过')
+      // if (this.consts.CONSOLE) console.log('密码1校验通过')
       callback(); // 必须调用，否则回不到validata()方法.
     };
     var validatePass2 = (rule, pwd2, callback) => {
-      console.log(pwd2 + " ------ pass02 ------")
+      // console.log(pwd2 + " ------ pass02 ------")
       if (pwd2 === '') {
         callback(new Error('请再次输入密码'));
       } else if (pwd2 !== this.ruleForm.pass) {
         callback(new Error('两次输入密码不一致!'));
       } else {
-        if (this.consts.CONSOLE) console.log('密码2校验通过')
+        // if (this.consts.CONSOLE) console.log('密码2校验通过')
         callback();
       }
 

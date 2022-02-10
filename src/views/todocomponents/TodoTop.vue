@@ -33,12 +33,14 @@ export default {
         username: this.$store.state.globalOptions.userInfo.username,
         userId: this.$store.state.globalOptions.userInfo.userId,
         title: this.input_value,
-        done: false
+        done: false,
+        createTime: new Date().getTime(),
       };
-      console.log(todoObj.id, this.input_value)
+      if (this.consts.CONSOLE) console.log(todoObj.id, this.input_value)
       // 触发总线事件，给APP发送todoObj
       this.$bus.$emit("fuck_addOneTodo", todoObj);
       this.input_value = ""
+      if (this.consts.CONSOLE) console.log("新增一个todoItem: ",todoObj)
     },
     hideAddBtn() {
       let _this = this

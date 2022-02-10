@@ -19,9 +19,9 @@ export default {
   data() {
     return {
       todos: [
-        {id: "001", title: "0eat", done: false},
-        {id: "002", title: "0sleep", done: false},
-        {id: "003", title: "0fuck", done: true}
+        {id: "001", title: "eat", done: false},
+        {id: "002", title: "sleep", done: false},
+        {id: "003", title: "fuck", done: true}
       ],
       // todos: JSON.parse(localStorage.getItem("todos")) || [],
       // 用于用户的撤销动作。顾名思义，是一个类似栈的数组。
@@ -93,6 +93,30 @@ export default {
       // 不在这里设置FALSE，因为watch是在此后执行的，如果在此设置为false，那就完全是脱了裤子放屁
       // this.onWithDraw = false;
     },
+    isListEqual(localList,serverList){
+      let length = localList.length;
+
+      for (let i = 0; i < length; i++) {
+        let localItem = localList[i];
+        let serverItem = serverList[i];
+
+        let localProps = Object.getOwnPropertyNames(localItem);
+        let serverProps = Object.getOwnPropertyNames(serverItem);
+
+        if (localProps.length !== serverProps.length){
+          return false;
+        }
+
+        for (let j = 0; j < localProps.length; j++) {
+          let propName = localProps[j];
+          if (localItem[propName] !== serverItem[propName]){
+            return false
+          }
+        }
+      }
+
+      return true;
+    }
   },
   watch: {
     todos: {
@@ -156,7 +180,7 @@ export default {
               // 二、local非空，但服务器为空，以local为准
               this.todos = localTodos;
             } else {
-              if (localTodos === serverTodos) {
+              if (this.isListEqual(localTodos,serverTodos)) {
                 // 三、local和服务器均不空，且一致，服务器数据直接保存
                 this.todos = serverTodos;
               } else {
