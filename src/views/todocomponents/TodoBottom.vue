@@ -79,19 +79,20 @@ export default {
       this.warn = false
     },
     saveAndQuit() {
-      if (confirm("宁确定要退出吗？")){
-        this.saveToServer()
+      if (confirm("宁确定要退出吗？")) {
+        this.saveToServer(null,true)
         this.$bus.$emit("jumpToMain")
       }
     },
-    saveToServer() {
+    saveToServer(e,flag) {
       // 判断是否登录
       if (!this.$store.state.globalOptions.login) {
         // 没登录，提醒
-        this.$message({
-          type: 'warning',
-          message: '未登录，无需手动同步，数据将实时保存在本地。'
-        })
+        if (!flag)
+          this.$message({
+            type: 'warning',
+            message: '未登录，无需手动同步，数据将实时保存在本地。'
+          })
       } else {
         let url = this.$store.state.todoOptions.todoHost + '/update_all';
         // 已登录，将数据发往后端，请求保存，策略由后端决定（此处为全部delete再重新insert)
@@ -127,6 +128,7 @@ export default {
           }
         })
 
+        let _this = this
         /*
         几点注意：
         1、contentType设置为json后，浏览器会先发送OPTIONS请求，所以后端的登录拦截器要放行一下
@@ -148,9 +150,12 @@ export default {
           },
           crossDomain: true,
           success: function () {
-            console.log("成功")
+            // console.log(_this,this)
+            if (_this.consts.CONSOLE) console.log("同步成功")
+            _this.$message.success("数据同步成功")
           },
           error: function () {
+            this.$message.error("数据同步失败")
           }
         })
 

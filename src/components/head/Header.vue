@@ -47,7 +47,7 @@ export default {
   },
   computed: {
     ...mapState('headOptions', ["drawers",]),
-    ...mapState('globalOptions', ["login","userInfo"])
+    ...mapState('globalOptions', ["login", "userInfo"])
   },
   methods: {
     ...mapMutations("headOptions",
@@ -56,11 +56,13 @@ export default {
           'TAB_THANKS',
           'TAB_DIALOGFORMVISIBLE_LOGIN',
           'TAB_DIALOGFORMVISIBLE_REGISTER']),
-    ...mapMutations("globalOptions", ['SET_USER_INFO','CLEAR_USER_INFO','LOGOUT']),
-    logout(){
+    ...mapMutations("globalOptions", ['SET_USER_INFO', 'CLEAR_USER_INFO', 'LOGOUT']),
+    logout() {
       // todo_done 把数据同步到数据库
       // 先判断是否inAPP
-      if (this.$store.state["globalOptions/inTodoApp"]) {
+      let inOrNot = this.$store.state.globalOptions.inTodoApp;
+      if (this.consts.CONSOLE) console.log("inTodoApp为: ", inOrNot)
+      if (inOrNot) {
         // 如果在APP内，则令总线触发saveToServer
         if (this.consts.CONSOLE) console.log("在APP内退出，触发同步")
         this.$bus.$emit('saveToServer')

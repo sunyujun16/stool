@@ -51,7 +51,7 @@ export default {
       setTimeout(() => {
         if (userName.length > 16) {
           callback(new Error('用户名过长'));
-          // if (this.consts.CONSOLE) console.log("~用户名过长触发~")
+          if (this.consts.CONSOLE) console.log("~用户名过长触发~")
         }
         // 正则表达式判断字符合法性
         if (!userName.match(/^[\u4E00-\u9FA5\uF900-\uFA2D|\w]{2,20}$/)) {
@@ -59,7 +59,7 @@ export default {
           // if (this.consts.CONSOLE) console.log("~非法字符触发~");
         }
       }, 200);
-      // if (this.consts.CONSOLE) console.log('用户名校验成功')
+      if (this.consts.CONSOLE) console.log('登录用户名校验成功')
       callback();
     };
     var validatePass = (rule, pwd, callback) => {
@@ -81,7 +81,7 @@ export default {
       // }
 
       // if (this.consts.CONSOLE) console.log('密码1校验通过')
-      callback(); // 必须调用，否则回不到validata()方法.
+      callback(); // 必须调用，否则回不到validate()方法.这里必须调用时因为else里面没写，无论走哪条路，都是以callback结尾。
     };
     var validatePass2 = (rule, pwd2, callback) => {
       // console.log(pwd2 + " ------ pass02 ------")

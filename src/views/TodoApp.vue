@@ -80,12 +80,12 @@ export default {
       // 当length榨干到0的时候，保留当前状态, 以保证不丢失状态。这步使得length永远大于0
       if (this.historyStack.length === 0) {
         this.unshiftIntoStack(JSON.stringify(this.todos))
-        if (this.consts.CONSOLE) // product版本干脆不提示，以免影响用户观感
-          this.$message({
-            type: "warning",
-            message: "没有更多操作记录",
-            duration: 1000,
-          })
+        // product版本干脆不提示，以免影响用户观感
+        this.$message({
+          type: "warning",
+          message: "没有更多操作记录",
+          duration: 1000,
+        })
         // 这句没用了，因为todos一定会修改
         // this.onWithDraw = false; // 归零之后不会再修改todos所以这里要set一下，否则一旦归零导致onWithDraw还是true，stack不会添东西。
       }
@@ -93,7 +93,7 @@ export default {
       // 不在这里设置FALSE，因为watch是在此后执行的，如果在此设置为false，那就完全是脱了裤子放屁
       // this.onWithDraw = false;
     },
-    isListEqual(localList,serverList){
+    isListEqual(localList, serverList) {
       let length = localList.length;
 
       for (let i = 0; i < length; i++) {
@@ -103,13 +103,13 @@ export default {
         let localProps = Object.getOwnPropertyNames(localItem);
         let serverProps = Object.getOwnPropertyNames(serverItem);
 
-        if (localProps.length !== serverProps.length){
+        if (localProps.length !== serverProps.length) {
           return false;
         }
 
         for (let j = 0; j < localProps.length; j++) {
           let propName = localProps[j];
-          if (localItem[propName] !== serverItem[propName]){
+          if (localItem[propName] !== serverItem[propName]) {
             return false
           }
         }
@@ -122,7 +122,7 @@ export default {
     todos: {
       deep: true,
       handler(value) {
-        if (this.consts.CONSOLE) console.log("监测到todos变化 ...")
+        if (this.consts.CONSOLE) console.log("监测到todos变化...同步到本地")
         // 每次修改都更新localStorage
         localStorage.setItem('todos', JSON.stringify(value));
         // 判断是不是正在撤销，如果不是，添加stack
@@ -131,7 +131,7 @@ export default {
           this.unshiftIntoStack(JSON.stringify(this.todos));
           // 设置最近操作不是撤回，这句代码放在这里的逻辑本质是：在unshift发生处，立flag，表明刚塞进去一个，还热乎，还多余。
           this.lastIsWithDraw = false;
-          if (this.consts.CONSOLE) console.log("压栈 ~", this.historyStack)
+          // if (this.consts.CONSOLE) console.log("压栈 ~", this.historyStack)
         } else {
           // 是撤回，通过以下两个布尔值，设置最近一次操作类型为撤回，并终止撤回操作的工作状态。
           // this.lastIsWithDraw = true; // 不需要，因为走到这儿说明刚刚经过shift函数。
@@ -180,7 +180,7 @@ export default {
               // 二、local非空，但服务器为空，以local为准
               this.todos = localTodos;
             } else {
-              if (this.isListEqual(localTodos,serverTodos)) {
+              if (this.isListEqual(localTodos, serverTodos)) {
                 // 三、local和服务器均不空，且一致，服务器数据直接保存
                 this.todos = serverTodos;
               } else {

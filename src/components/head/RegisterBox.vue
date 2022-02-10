@@ -36,30 +36,48 @@
 <script>
 import {mapMutations, mapState} from "vuex";
 import md5 from 'js-md5';
+import $ from 'jquery'
 
 export default {
   name: "RegisterBox",
   data() {
-    var checkName = (rule, userName, callback) => {
-      if (this.consts.CONSOLE) console.log(userName + " ------ Name校验开始 ------")
-      if (!userName) {
+    var checkName = (rule, username, callback) => {
+      if (this.consts.CONSOLE) console.log(username + " ------ 用户名注册校验 ------")
+      if (!username) {
         callback(new Error('用户名不能为空噻'));
       }
       setTimeout(() => {
-        if (userName.length > 16) {
+        if (username.length > 16) {
           callback(new Error('用户名过长'));
           if (this.consts.CONSOLE) console.log("~用户名过长触发~")
         }
         // 正则表达式判断字符合法性
-        if (!userName.match(/^[\u4E00-\u9FA5\uF900-\uFA2D|\w]{2,20}$/)) {
+        if (!username.match(/^[\u4E00-\u9FA5\uF900-\uFA2D|\w]{2,20}$/)) {
           callback(new Error('请使用中文、字母、数字和下划线的组合'))
           if (this.consts.CONSOLE) console.log("~非法字符触发~");
         }
-        // TODO 做判断，向后端发请求检查用户名是否冲突，不需要拦截的路径/find_duplicate，后端需要放行（这里会不会有安全漏洞呢？）。
-
+        // 做判断，向后端发请求检查用户名是否冲突，不需要拦截的路径/find_duplicate，后端需要放行（这里会不会有安全漏洞呢？）。
+        let url = this.$store.state.todoOptions.todoHost + "/check_dup_name?username=" + username
+        // if (this.consts.CONSOLE) console.log("检查用户名重复：", url)
+        this.$axios.get(url, {withCredentials: false}).then(
+            response => {
+              // console.log('返回结果：', response.data)
+              if (response.data === true) {
+                callback(new Error('巧了，该用户已存在'))
+              } else {
+                // console.log("沃日~")
+                callback();
+              }
+            },
+            error => {
+              this.$message.error("用户名查重失败")
+              callback();
+            }
+        )
       }, 200);
+      // 由于上面所有路线均以callback结尾，所以这句应该不会被触发。我错了，还是触发了，因为有200的延迟
       if (this.consts.CONSOLE) console.log('用户名校验结束。')
-      callback();
+      // callback();
     };
     var validatePass = (rule, pwd, callback) => {
       if (this.consts.CONSOLE) console.log(pwd + " ------ pass01开始校验 ------")
@@ -159,7 +177,7 @@ export default {
             // 提示一下注册失败
             this.$message({
               customClass: 'noticeMsg',
-              message: '注册失败，错误信息：' + error.message,
+              message: '注册失败，错误信息：' + error.status === '888' ? '用户已存在' : error.status,
               type: 'error', // 样式在main.js引入
             })
             // 这句没必要，本来就没登录
