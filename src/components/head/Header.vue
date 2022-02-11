@@ -70,7 +70,7 @@ export default {
         if (this.consts.CONSOLE) console.log("不在APP内退出，不进行同步")
       }
 
-      // clear sessionStorage
+      // clear sessionStorage，注意后端也要清除
       sessionStorage.clear()
 
       this.$message({
@@ -81,7 +81,21 @@ export default {
       // 退出登录，修改login状态，清除全局userInfo
       this.LOGOUT();
       this.CLEAR_USER_INFO();
-      // todo 发送请求，清除后端的相应session对象。
+
+      // 发送请求，清除后端的相应session对象。
+      let _this = this
+      this.$nextTick(() => {
+        let url = _this.$store.state.todoOptions.todoHost
+            + '/logout?username='
+            + _this.$store.state.globalOptions.userInfo.username;
+        _this.$axios.get(url).then(
+            response => {
+              _this.$message.success("已退出登录")
+            },
+            error => {
+              _this.$message.error("服务器端退出异常，请重启浏览器后登录")
+            })
+      })
 
     }
   }

@@ -160,6 +160,11 @@ export default {
           {
             username: this.ruleForm.userName,
             password: md5(this.ruleForm.pass),
+          },
+          {
+            // 登录不要带cookie，新登录的用户需要新的sessionId，但是这么设置会导致set-cookie失效。所以不行。
+            // withCredentials: false
+            withCredentials: true
           }
       ).then(response => {
         if (this.consts.CONSOLE) console.log("登录成功，状态码：" + response.status)
@@ -174,14 +179,14 @@ export default {
         });
         // 存储用户信息到sessionStorage当中
         sessionStorage.setItem("userInfo", JSON.stringify(this.$store.state.globalOptions.userInfo));
-
         // 退出登录窗口
         this.TAB_DIALOGFORMVISIBLE_LOGIN(false);
-        // 刷新页面
+        // 刷新页面, 放在post内部会导致sessionID不设置完成就发请求？并不是。。。不设置的原因是withCredential=FALSE了
         this.refreshComponent();
       }).catch(error => {
         alert("登录失败，错误码: " + error.status + "，错误信息: " + error.message)
       })
+
     },
     /**
      * 跳转到blank再回来，实现刷新（触发当前页面的beforeMounted钩子）

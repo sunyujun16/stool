@@ -123,8 +123,9 @@ export default {
       deep: true,
       handler(value) {
         if (this.consts.CONSOLE) console.log("监测到todos变化...同步到本地")
-        // 每次修改都更新localStorage
-        localStorage.setItem('todos', JSON.stringify(value));
+        // 每次修改都更新localStorage, 拼接用户名来区分，避免item的ID值冲突。
+        let username = this.$store.state.globalOptions.userInfo.username;
+        localStorage.setItem(username ? username : ''  + 'todos', JSON.stringify(value));
         // 判断是不是正在撤销，如果不是，添加stack
         if (!this.onWithDraw) {
           // 保存当前快照到撤回栈顶，以供撤回
@@ -165,19 +166,23 @@ export default {
           offset: 60,
         })
     } else {
+      let username = this.$store.state.globalOptions.userInfo.username;
+      let userId = this.$store.state.globalOptions.userInfo.userId;
       // 已登录，先向stool服务端请求itemList数据，并且拿到localStorage。
-      let url = this.$store.state.todoOptions.todoHost + "/list-item";
+      let url = this.$store.state.todoOptions.todoHost + "/list-item?userId=" + userId;
       this.$axios.get(url).then(
           response => {
             // 分别获取本地和服务器的数据，以便比较。
-            let localTodos = JSON.parse(localStorage.getItem("todos"));
+            if (this.consts.CONSOLE) console.log('username: ',username)
+            let localTodos = JSON.parse(localStorage.getItem((username + "todos")));
             let serverTodos = response.data;
             // 分类讨论:
             if (!localTodos || localTodos.length === 0) {
               // 一、local为空，则直接读取服务器数据
+              if (this.consts.CONSOLE) console.log('local存储为空，读取服务器数据')
               this.todos = serverTodos;
             } else if (!serverTodos || serverTodos.length === 0) {
-              // 二、local非空，但服务器为空，以local为准
+              // 二、local非空，但服务器为空，以local为准, todo 但要判断用户名
               this.todos = localTodos;
             } else {
               if (this.isListEqual(localTodos, serverTodos)) {

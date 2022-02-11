@@ -155,7 +155,7 @@ export default {
             _this.$message.success("数据同步成功")
           },
           error: function () {
-            this.$message.error("数据同步失败")
+            _this.$message.error("数据同步失败")
           }
         })
 
