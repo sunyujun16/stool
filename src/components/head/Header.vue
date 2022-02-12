@@ -2,10 +2,10 @@
   <div>
     <el-header class="hf-bgcolor" height="45px">
       <div style="float: left">
-        <span class="headLink" @click="TAB_RESUME(true)">我的简历</span>
+        <span class="headLink" @click="TAB_RESUME(true)">站长简介</span>
         <el-divider direction="vertical"></el-divider>
-        <span class="headLink" @click="TAB_STORY(true)">我的故事</span>
-        <el-divider direction="vertical"></el-divider>
+<!--        <span class="headLink" @click="TAB_STORY(true)">我的故事</span>-->
+<!--        <el-divider direction="vertical"></el-divider>-->
         <span class="headLink" @click="TAB_THANKS(true)">特别鸣谢</span>
       </div>
       <div style="float: right">
