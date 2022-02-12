@@ -65,7 +65,7 @@ export default {
       if (inOrNot) {
         // 如果在APP内，则令总线触发saveToServer
         if (this.consts.CONSOLE) console.log("在APP内退出，触发同步")
-        this.$bus.$emit('saveToServer')
+        this.$bus.$emit('saveToServer', null, true, true)
       } else {
         if (this.consts.CONSOLE) console.log("不在APP内退出，不进行同步")
       }

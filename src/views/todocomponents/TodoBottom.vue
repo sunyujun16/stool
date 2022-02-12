@@ -84,11 +84,18 @@ export default {
         this.$bus.$emit("jumpToMain")
       }
     },
-    saveToServer(e,flag) {
+    // mute是控制是message的显示的，在不通过点击同步按钮触发时，不显示message。
+    /**
+     *
+     * @param e 事件，此处仅作为占位使用
+     * @param mute 控制message是否显示的参数，默认则显示。
+     * @param noAsync 控制同步数据的请求是否异步执行，不传参则默认为异步。
+     */
+    saveToServer(e, mute, noAsync) {
       // 判断是否登录
       if (!this.$store.state.globalOptions.login) {
         // 没登录，提醒
-        if (!flag)
+        if (!mute)
           this.$message({
             type: 'warning',
             message: '未登录，无需手动同步，数据将实时保存在本地。'
@@ -139,6 +146,9 @@ export default {
         $.ajax({
           type: "POST",
           url: url,
+          // 这里主要是用在退出登录时，由于先发送OPTIONS嗅探，所以正式请求会晚一些执行，这时，只有阻止异步，
+          // 才能保证：正式请求/update_all不会发生在/logout之后导致session丢失，而被拦截（401）
+          async: !noAsync,
           data: JSON.stringify({
             itemList: this.todos,
             userId: this.$store.state.globalOptions.userInfo.userId

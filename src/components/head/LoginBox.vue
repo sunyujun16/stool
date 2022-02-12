@@ -98,9 +98,9 @@ export default {
     return {
       formLabelWidth: '80px',
       ruleForm: {
-        pass: '0',
+        pass: '',
         checkPass: '',
-        userName: 'sun'
+        userName: ''
       },
       rules: {
         pass: [
