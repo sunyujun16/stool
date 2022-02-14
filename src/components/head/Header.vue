@@ -76,11 +76,7 @@ export default {
       // clear sessionStorage，注意后端也要清除
       sessionStorage.clear()
 
-      this.$message({
-        type: "success",
-        message: '数据已保存到云端，现在进入离线模式',
-        // offset: 3000,
-      })
+      // this.$message.success('进入离线模式')
       // 退出登录，修改login状态，清除全局userInfo
       this.LOGOUT();
       this.CLEAR_USER_INFO();
@@ -93,7 +89,7 @@ export default {
             + _this.$store.state.globalOptions.userInfo.username;
         _this.$axios.get(url).then(
             response => {
-              _this.$message.success("已退出登录")
+              _this.$message.success("服务端已清理")
             },
             error => {
               _this.$message.error("服务器端退出异常，请重启浏览器后登录")

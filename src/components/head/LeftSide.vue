@@ -59,7 +59,7 @@
 
 
     <el-drawer
-        title="给我留言"
+        title="请您畅所欲言（留言对所有用户可见）"
         :visible.sync="drawers.message"
         :direction="direction"
         :before-close="handleClose"
@@ -70,12 +70,12 @@
       <div style="text-align: left; margin-left: 20px; line-height: 32px">
 
 
-        <span class="thankTitle">请您畅所欲言（留言对所有用户可见）：</span><br/>
+        <!--        <span class="thankTitle">请您畅所欲言（留言对所有用户可见）：</span><br/>-->
         <label @mouseover="showAddBtn = true" @mouseout="showAddBtn = false">
           <input
               type="text"
               class="input-msg"
-              placeholder="不超过50字，若要表白，请留下姓名，谢谢"
+              placeholder="请输入，按回车添加，不超过50字。（若要表白请留下姓名，谢谢）"
               @keyup.enter="addAndSaveMsg"
               v-model="input_value"/>
           <button @click="addAndSaveMsg" v-show="showAddBtn" style="margin-left: 5px">添加</button>
@@ -90,7 +90,7 @@
               word-break: normal;
               white-space: pre-wrap">
             <span style="float: left; font-weight: bold">{{ message.id }}：</span>
-            <span style="float: left; width: 90%">{{ message.content }} - {{
+            <span style="float: left; width: 90%">{{ message.content }} &nbsp; at: {{
                 new Date(message.date).toLocaleString().split(' ')[0]
               }}</span>
           </span>
@@ -118,14 +118,9 @@ export default {
       input_value: '',
       messages: [
         {
-          id: 2,
-          content: '初始化3',
-          date: 1002000000000,
-        },
-        {
           id: 1,
-          content: '初始化2',
-          date: 10000000000,
+          content: '初始化3',
+          date: 1602000000000,
         },
         {
           id: 0,
@@ -163,13 +158,50 @@ export default {
       document.styleSheets[0].addRule('.' + className + '__body::-webkit-scrollbar', 'display:none')
     },
     addAndSaveMsg(e) {
-      this.input_value;
-      // 包装msg和当前时间到message对象，添加到
+      // 先判断是否合规
+      let inputValue = this.input_value;
+      if (inputValue.length > 50) {
+        this.$message.error("输入超过50个字符")
+        // alert('输入超过50个字符');
+        return;
+      } else if (inputValue.length === 0) {
+        this.$message.error("输入不能为空")
+      }
 
+      // 包装msg和当前时间到message对象，发送到后端，不需要携带cookies.
+      let url = this.$store.state.todoOptions.todoHost + "/save_msg";
+      let message = {
+        id: null,
+        content: inputValue,
+        time: new Date().getTime(),
+      }
+      // you know what? nothing...
+      this.$axios.post(url, message, {withCredentials: false}).then(
+          response => {
+            if (response.data === 'success') {
+              this.$message.success("保存成功")
+              this.listMsg()
+            } else {
+              this.$message.error("保存失败")
+            }
+          }
+      ).catch(err => {
+        this.$message.error(err)
+      })
+    },
+    listMsg() {
+      // todo_ 加载this.messages
+      let url = this.$store.state.todoOptions.todoHost + "/list_messages";
+      this.$axios.get(url).then(
+          res => {
+            this.messages = res.data
+          }, err => {
+            this.$message.error("获取数据失败，请联系军仔")
+          })
     }
   },
   beforeMount() {
-    // todo 加载this.messages
+    this.listMsg()
   }
 }
 </script>
@@ -222,6 +254,12 @@ a:visited {
   padding: 4px 7px;
   margin-top: 10px;
   margin-bottom: 20px;
+}
+
+.input-msg:focus {
+  outline: none;
+  border-color: rgba(82, 168, 236, 0.8);
+  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(82, 168, 236, 0.6);
 }
 
 .msg-list {

@@ -80,7 +80,7 @@ export default {
     },
     saveAndQuit() {
       if (confirm("宁确定要退出吗？")) {
-        this.saveToServer(null,true)
+        this.saveToServer(null, true)
         this.$bus.$emit("jumpToMain")
       }
     },
@@ -143,6 +143,7 @@ export default {
         3、跨域问题是后端解决的，前端只要保证请求带上cookie和参数即可。
         4、axios仍然不会携带cookie，不对它抱有幻想了，草他娘的。
          */
+        // console.log("什么鬼？")
         $.ajax({
           type: "POST",
           url: url,
@@ -168,7 +169,6 @@ export default {
             _this.$message.error("数据同步失败")
           }
         })
-
 
         // 以下代码有返回值，证明了只有POST请求无法携带cookies
         // this.$axios.get(url).then(
