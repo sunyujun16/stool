@@ -1,7 +1,7 @@
 <template>
   <div>
     <el-drawer
-        title="站长简介"
+        title="我的故事"
         :visible.sync="drawers.resume"
         :direction="direction"
         :before-close="handleClose"
@@ -12,17 +12,17 @@
       <Resume/>
     </el-drawer>
 
-<!--    <el-drawer-->
-<!--        title="我的故事"-->
-<!--        :visible.sync="drawers.story"-->
-<!--        :direction="direction"-->
-<!--        :before-close="handleClose"-->
-<!--        size="40%"-->
-<!--        @open="changeClass"-->
-<!--        :modal="false"-->
-<!--    >-->
-<!--      nothing for now-->
-<!--    </el-drawer>-->
+    <!--    <el-drawer-->
+    <!--        title="我的故事"-->
+    <!--        :visible.sync="drawers.story"-->
+    <!--        :direction="direction"-->
+    <!--        :before-close="handleClose"-->
+    <!--        size="40%"-->
+    <!--        @open="changeClass"-->
+    <!--        :modal="false"-->
+    <!--    >-->
+    <!--      nothing for now-->
+    <!--    </el-drawer>-->
 
     <el-drawer
         title="特别鸣谢"
@@ -44,18 +44,50 @@
         <span class="thankContent"><a href="https://www.bilibili.com/video/BV1Zy4y1K7SH?spm_id_from=333.999.0.0"
                                       target="_blank">张天禹老师的VUE2(尚硅谷)</a></span><br/>
 
-<!--        <hr style="margin: 20px 20px 20px 0px; background-color: #ccc499;"/> &lt;!&ndash;上右下左，记住了&ndash;&gt;-->
-<!--        <span class="thankTitle">感谢我的父母、家人以及朋友们：</span><br/>-->
-<!--        <span class="thankContent">你们的支持和信任对我很重要。</span><br/>-->
+        <!--        <hr style="margin: 20px 20px 20px 0px; background-color: #ccc499;"/> &lt;!&ndash;上右下左，记住了&ndash;&gt;-->
+        <!--        <span class="thankTitle">感谢我的父母、家人以及朋友们：</span><br/>-->
+        <!--        <span class="thankContent">你们的支持和信任对我很重要。</span><br/>-->
 
-<!--        <hr style="margin: 20px 20px 20px 0px;  background-color: #ccc499"/> &lt;!&ndash;上右下左，记住了&ndash;&gt;-->
-<!--        <span class="thankTitle">感谢俺自己：</span><br/>-->
-<!--        <span class="thankContent">-->
-<!--          - 不客气。-->
-<!--        </span>-->
+        <!--        <hr style="margin: 20px 20px 20px 0px;  background-color: #ccc499"/> &lt;!&ndash;上右下左，记住了&ndash;&gt;-->
+        <!--        <span class="thankTitle">感谢俺自己：</span><br/>-->
+        <!--        <span class="thankContent">-->
+        <!--          - 不客气。-->
+        <!--        </span>-->
         <br/>
       </div>
     </el-drawer>
+
+
+    <el-drawer
+        title="给我留言"
+        :visible.sync="drawers.message"
+        :direction="direction"
+        :before-close="handleClose"
+        size="40%"
+        @open="changeClass"
+        :modal="false"
+    >
+      <div style="text-align: left; margin-left: 20px; line-height: 32px">
+
+
+        <span class="thankTitle">请您畅所欲言（留言对所有用户可见）：</span><br/>
+        <label @mouseover="showAddBtn = true" @mouseout="showAddBtn = false">
+          <input
+              type="text"
+              class="input-msg"
+              placeholder="若要表白，请留下姓名，谢谢"
+              @keyup.enter="addAndSaveMsg"
+              v-model="input_value"/>
+          <button @click="addAndSaveMsg" v-show="showAddBtn" style="margin-left: 5px">添加</button>
+        </label>
+
+        <div v-for="(message, index) of this.messages" :key="index" class="msg-list">
+          {{ new Date(message.date).toLocaleString().split(' ')[0] }}：{{ message.content }}
+        </div>
+
+      </div>
+    </el-drawer>
+
   </div>
 </template>
 
@@ -70,6 +102,20 @@ export default {
     return {
       direction: 'ltr',
       changeFlag: false,
+      showAddBtn: false,
+      input_value: '',
+      messages: [
+        {
+          content: '初始化3',
+          date: 1002000000000,
+        }, {
+          content: '初始化2',
+          date: 10000000000,
+        }, {
+          content: '初始化1',
+          date: 0,
+        },
+      ],
     };
   },
   computed: {
@@ -80,11 +126,11 @@ export default {
       // if (confirm("确定关闭吗?"))
       done();
     },
-    changeClass() {
+    changeClass() { // 由于在update钩子里未调用，热刷新maybe有一定问题，不过生产环境应该无所谓
       if (this.changeFlag) return
       this.changeFlag = true
       // 改变el-drawer的颜色，除了这样不知道如何了，修改class属性？
-      for (let i = 0; i < 2; i++) {
+      for (let i = 0; i < 3; i++) {
         this.setRawStyleFor("el-drawer", i);
       }
       // document.getElementsByClassName("el-drawer")[2].class = ("el-drawer-cus");
@@ -96,8 +142,16 @@ export default {
       theStyle.backgroundColor = 'rgba(1,1,1,0.4)';
       theStyle.color = 'white';
       theStyle.borderRight = '1px solid rgba(204, 196, 153, 0.5)'
-      document.styleSheets[0].addRule('.'+className + '__body::-webkit-scrollbar', 'display:none')
+      // 取消滚动条，重要！！！
+      document.styleSheets[0].addRule('.' + className + '__body::-webkit-scrollbar', 'display:none')
+    },
+    addAndSaveMsg(e) {
+      this.input_value;
+
     }
+  },
+  beforeMount() {
+    // todo 加载this.messages
   }
 }
 </script>
@@ -107,7 +161,6 @@ export default {
 .el-drawer__wrapper {
   background-color: rgba(1, 1, 1, 0.7);
 }
-
 
 /*一个也不好使*/
 .el-drawer-cus {
@@ -140,4 +193,23 @@ a {
 a:visited {
   color: lightcyan;
 }
+
+.input-msg {
+  width: 80%;
+  /*margin-left: 10px;*/
+  height: 28px;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  padding: 4px 7px;
+  margin-top: 10px;
+  margin-bottom: 20px;
+}
+
+.msg-list {
+  margin-left: 20px;
+  font-size: 16px;
+  line-height: 32px;
+}
+
 </style>

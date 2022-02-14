@@ -11,6 +11,9 @@ const head = {
         TAB_THANKS(state, boolFlag) {
             state.drawers.thanks = boolFlag;
         },
+        LEAVE_MSG(state, boolFlag) {
+            state.drawers.message = boolFlag;
+        },
         // todo_done 修改方法名，区分login和register
         TAB_DIALOGFORMVISIBLE_LOGIN(state, boolFlag) {
             state.dialogFormVisible_login = boolFlag;
@@ -26,6 +29,7 @@ const head = {
             resume: false,
             story: false,
             thanks: false,
+            message: false
         },
         // 使用者 LogInBox组件
         dialogFormVisible_login: false,

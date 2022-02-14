@@ -5,8 +5,10 @@
         <span class="headLink" @click="TAB_RESUME(true)">站长简介</span>
         <el-divider direction="vertical"></el-divider>
 <!--        <span class="headLink" @click="TAB_STORY(true)">我的故事</span>-->
-<!--        <el-divider direction="vertical"></el-divider>-->
+        <!--        <el-divider direction="vertical"></el-divider>-->
         <span class="headLink" @click="TAB_THANKS(true)">特别鸣谢</span>
+        <el-divider direction="vertical"></el-divider>
+        <span class="headLink" @click="LEAVE_MSG(true)">给我留言</span>
       </div>
       <div style="float: right">
         <span class="headLink" id="login" v-show="!login"
@@ -54,6 +56,7 @@ export default {
         ['TAB_RESUME',
           'TAB_STORY',
           'TAB_THANKS',
+          'LEAVE_MSG',
           'TAB_DIALOGFORMVISIBLE_LOGIN',
           'TAB_DIALOGFORMVISIBLE_REGISTER']),
     ...mapMutations("globalOptions", ['SET_USER_INFO', 'CLEAR_USER_INFO', 'LOGOUT']),
