@@ -75,14 +75,26 @@
           <input
               type="text"
               class="input-msg"
-              placeholder="若要表白，请留下姓名，谢谢"
+              placeholder="不超过50字，若要表白，请留下姓名，谢谢"
               @keyup.enter="addAndSaveMsg"
               v-model="input_value"/>
           <button @click="addAndSaveMsg" v-show="showAddBtn" style="margin-left: 5px">添加</button>
         </label>
 
         <div v-for="(message, index) of this.messages" :key="index" class="msg-list">
-          {{ new Date(message.date).toLocaleString().split(' ')[0] }}：{{ message.content }}
+          <span
+              style="float: left;
+              width: 100%;
+              display: inline-block;
+              word-wrap: break-word;
+              word-break: normal;
+              white-space: pre-wrap">
+            <span style="float: left; font-weight: bold">{{ message.id }}：</span>
+            <span style="float: left; width: 90%">{{ message.content }} - {{
+                new Date(message.date).toLocaleString().split(' ')[0]
+              }}</span>
+          </span>
+          <div style="clear: both"></div>
         </div>
 
       </div>
@@ -106,13 +118,18 @@ export default {
       input_value: '',
       messages: [
         {
+          id: 2,
           content: '初始化3',
           date: 1002000000000,
-        }, {
+        },
+        {
+          id: 1,
           content: '初始化2',
           date: 10000000000,
-        }, {
-          content: '初始化1',
+        },
+        {
+          id: 0,
+          content: '初始化111111 111111111 111111111 1 1 1111111111122222242aggggggg ggggggggg gggggggggs dfffffffffffffff fffffffffff134',
           date: 0,
         },
       ],
@@ -147,6 +164,7 @@ export default {
     },
     addAndSaveMsg(e) {
       this.input_value;
+      // 包装msg和当前时间到message对象，添加到
 
     }
   },
@@ -208,6 +226,7 @@ a:visited {
 
 .msg-list {
   margin-left: 20px;
+  margin-right: 20px;
   font-size: 16px;
   line-height: 32px;
 }
