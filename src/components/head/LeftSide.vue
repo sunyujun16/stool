@@ -91,7 +91,7 @@
               white-space: pre-wrap">
             <span style="float: left; font-weight: bold">{{ message.id }}：</span>
             <span style="float: left; width: 90%">{{ message.content }} &nbsp; at: {{
-                new Date(message.date).toLocaleString().split(' ')[0]
+                getDate(message.time)
               }}</span>
           </span>
           <div style="clear: both"></div>
@@ -119,13 +119,13 @@ export default {
       messages: [
         {
           id: 1,
-          content: '初始化3',
-          date: 1602000000000,
+          content: '初始化2',
+          time: 1602000000000,
         },
         {
           id: 0,
-          content: '初始化111111 111111111 111111111 1 1 1111111111122222242aggggggg ggggggggg gggggggggs dfffffffffffffff fffffffffff134',
-          date: 0,
+          content: '初始化1',
+          time: 0,
         },
       ],
     };
@@ -137,6 +137,13 @@ export default {
     handleClose(done) {
       // if (confirm("确定关闭吗?"))
       done();
+    },
+    getDate(timestamp) {
+      let strings = new Date(timestamp).toLocaleString().split(' ')[0].split('/');
+      let year = strings[0],
+          month = strings[1].length === 2 ? strings[1] : '0' + strings[1],
+          day = strings[2].length === 2 ? strings[2] : '0' + strings[2]
+      return year + '年' + month + '月' + day + '日'
     },
     changeClass() { // 由于在update钩子里未调用，热刷新maybe有一定问题，不过生产环境应该无所谓
       if (this.changeFlag) return
@@ -154,8 +161,19 @@ export default {
       theStyle.backgroundColor = 'rgba(1,1,1,0.4)';
       theStyle.color = 'white';
       theStyle.borderRight = '1px solid rgba(204, 196, 153, 0.5)'
-      // 取消滚动条，重要！！！
-      document.styleSheets[0].addRule('.' + className + '__body::-webkit-scrollbar', 'display:none')
+      // 定义滚动条，重要！！！
+      // document.styleSheets[0].addRule('.' + className + '__body::-webkit-scrollbar', 'display:none')
+      document.styleSheets[0].addRule(
+          '.' + className + '__body::-webkit-scrollbar',
+          'background-color: rgba(0, 0, 0, 0.1); width: 10px')
+      document.styleSheets[0].addRule(
+          '.' + className + '__body::-webkit-scrollbar-track',
+          '-webkit-box-shadow: inset 0 0 6px rgba(50, 50, 50, 0.8);')
+      document.styleSheets[0].addRule(
+          '.' + className + '__body::-webkit-scrollbar-thumb',
+          'background-color: rgba(204, 196, 153, 0.2);' +
+                'border-radius: 10px;' +
+                '-webkit-box-shadow: inset 0 0 6px rgba(204, 196, 153, 0.3);')
     },
     addAndSaveMsg(e) {
       // 先判断是否合规
@@ -174,12 +192,13 @@ export default {
         id: null,
         content: inputValue,
         time: new Date().getTime(),
-      }
+      };
       // you know what? nothing...
       this.$axios.post(url, message, {withCredentials: false}).then(
           response => {
             if (response.data === 'success') {
               this.$message.success("保存成功")
+              this.input_value = ''
               this.listMsg()
             } else {
               this.$message.error("保存失败")

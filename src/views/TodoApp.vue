@@ -150,7 +150,7 @@ export default {
       // 未登录，首先提示一下
       this.$message({
         message: '建议注册登录后使用，否则数据只保留在本地，可能误删',
-        type: 'error',
+        type: 'warning',
         duration: 4000,
         showClose: true,
         center: true,
@@ -162,7 +162,7 @@ export default {
       if (!parseTodos || parseTodos.length === 0)
         this.$message({
           message: '本地缓存为空',
-          type: 'error',
+          type: 'warning',
           offset: 60,
         })
     } else {

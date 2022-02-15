@@ -3,10 +3,11 @@
     <!--  <div style="color: red">-->
     <!--    编写中-->
     <!--  </div>-->
+    <div style="height: 30px"></div>
     <div class="resume resume-left">
       <img src="@/assets/resume/jukan-tateisi-bJhT_8nbUA0-unsplash-s.jpg" alt="born.jpg">
       <div class="resume-description">
-        <span><b style="font-size: 20px">1994年</b>，new Me();</span>
+        <span><b style="font-size: 20px">1994年</b>，Hello world。</span>
       </div>
       <div class="clear-float"></div>
       <el-divider></el-divider>
