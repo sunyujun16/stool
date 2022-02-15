@@ -5,7 +5,7 @@
     color: #449999;
     position: relative;
     float: left;
-    margin-right: 60px;
+    margin-right: 100px;
     width: 320px;
     height: 400px;
     /*background-color: rgba(68, 153, 153, 0.5);*/
@@ -22,7 +22,7 @@
 
 .imgOutRange {
     float: left;
-    opacity: 0.6;
+    opacity: 0.7;
     position: relative;
     width: 100%;
     object-fit: contain; /*img背景关键属性*/
@@ -38,6 +38,7 @@
     object-fit: contain; /*img背景关键属性*/
 }
 
+/* > 只选择单级子元素*/
 .item-div > img:active {
     opacity: 0.85;
 }
@@ -67,7 +68,7 @@
     font-weight: 100;
     color: rgba(204, 196, 153, 1);
     /*font-family: ;*/
-    /*font-size: ;*/
+
     transition: all 0.1s;
     user-select:none
 }
@@ -78,6 +79,7 @@
     font-weight: 200;
     color: rgb(246, 238, 192);
     transition: all 0.1s;
+    /*font-size: 33px;*/
 }
 .itemText:active {
     cursor: default;
@@ -91,6 +93,6 @@
 }
 
 #todoItem {
-    margin-left: 20%;
+    margin-left: 18%;
 
 }

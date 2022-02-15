@@ -6,10 +6,11 @@
         :direction="direction"
         :before-close="handleClose"
         size="40%"
-        @open="changeClass"
+        @open="pushResume"
         :modal="false"
     >
-      <Resume/>
+<!--      <Resume/>-->
+      <router-view name="resume"></router-view>
     </el-drawer>
 
     <!--    <el-drawer-->
@@ -136,6 +137,7 @@ export default {
   methods: {
     handleClose(done) {
       // if (confirm("确定关闭吗?"))
+      this.$router.back()
       done();
     },
     getDate(timestamp) {
@@ -144,6 +146,12 @@ export default {
           month = strings[1].length === 2 ? strings[1] : '0' + strings[1],
           day = strings[2].length === 2 ? strings[2] : '0' + strings[2]
       return year + '年' + month + '月' + day + '日'
+    },
+    pushResume() {
+      this.$router.push({
+        name: 'resume'
+      })
+      this.changeClass();
     },
     changeClass() { // 由于在update钩子里未调用，热刷新maybe有一定问题，不过生产环境应该无所谓
       if (this.changeFlag) return
@@ -172,8 +180,8 @@ export default {
       document.styleSheets[0].addRule(
           '.' + className + '__body::-webkit-scrollbar-thumb',
           'background-color: rgba(204, 196, 153, 0.2);' +
-                'border-radius: 10px;' +
-                '-webkit-box-shadow: inset 0 0 6px rgba(204, 196, 153, 0.3);')
+          'border-radius: 10px;' +
+          '-webkit-box-shadow: inset 0 0 6px rgba(204, 196, 153, 0.3);')
     },
     addAndSaveMsg(e) {
       // 先判断是否合规

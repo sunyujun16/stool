@@ -6,6 +6,7 @@ Vue.use(VueRouter)
 import TodoApp from "@/views/TodoApp";
 import BoardsZone from "@/components/main/BoardsZone";
 import Blank from "@/components/blank/Blank";
+import Resume from "@/components/head/Resume";
 
 // create a router and expose it
 export default new VueRouter({
@@ -30,6 +31,14 @@ export default new VueRouter({
             name: 'blank',
             path: '/blank',
             component: Blank
+        },
+        {
+            name: 'resume',
+            path: '/head/left/resume',
+            components: {
+                // default: BoardsZone,
+                resume: Resume
+            }
         }
     ]
 })

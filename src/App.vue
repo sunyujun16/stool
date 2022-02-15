@@ -9,8 +9,9 @@
     </div>
     <!--    <img src="./assets/img/benaja-germann-QbdzCEXy5vs-unsplash-021.jpg" alt="nah" class="background-img" id="fuck"-->
     <!--         :style="imgStyle" ref="backImg"> &lt;!&ndash;    &ndash;&gt;-->
-    <img src="./assets/img/benaja-germann-QbdzCEXy5vs-unsplash-021.jpg" alt="nah" class="background-img" id="fuck"
-    > <!--    -->
+    <img src="./assets/img/benaja-germann-QbdzCEXy5vs-unsplash-021.jpg" alt="nah" class="background-img" id="fuck">
+<!--    <img src="./assets/img/olivier-guillard-xnGu_KGrqX8-unsplash.jpg" alt="nah" class="background-img" id="fuck">-->
+<!--    <div id="bg-cover"></div>-->
   </div>
 </template>
 
@@ -88,6 +89,17 @@ export default {
   object-fit: cover; /*img背景关键属性*/
 }
 
+#bg-cover {
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-index: 5;
+  width: 100%;
+  height: 100%;
+  background-color: black;
+  opacity: 0.382;
+}
+
 body > .el-container {
   margin-bottom: 40px;
 }
@@ -104,7 +116,7 @@ body > .el-container {
 .hf-bgcolor {
   /*background-color: rgba(68, 153, 153, 0.1);*/
   /*background-color: rgba(45, 121, 28, 0.1);*/
-  background-color: rgba(1, 1, 1, 0.1);
+  /*background-color: rgba(1, 1, 1, 0.1);*/
 }
 
 
