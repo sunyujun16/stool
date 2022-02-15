@@ -12,10 +12,11 @@
       <el-divider direction="horizontal"></el-divider>
       <div style="margin: 50px"></div>  <!-- 占位DIV -->
 
-      <!--    BoardsZone or TODOAPP or 。。。前端这鸡巴代码哪有一点可读性？ -->
+      <!--    BoardsZone or TODOAPP or 。。。前端这ji巴代码哪有一点可读性？ -->
       <!--tips：用全局事件总线实现事件的回调，即点击todolist触发此处的router push-->
-      <router-view></router-view>
-
+      <keep-alive>
+        <router-view></router-view>
+      </keep-alive>
       <div style="margin-bottom: 60px; clear: both"></div>  <!-- 占位DIV -->
       <el-divider direction="horizontal"></el-divider>
     </div>

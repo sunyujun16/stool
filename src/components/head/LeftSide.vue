@@ -10,7 +10,9 @@
         :modal="false"
     >
 <!--      <Resume/>-->
-      <router-view name="resume"></router-view>
+      <keep-alive>
+        <router-view name="resume"></router-view>
+      </keep-alive>
     </el-drawer>
 
     <!--    <el-drawer-->
@@ -213,8 +215,17 @@ export default {
               this.$message.success("保存成功")
               this.input_value = ''
               this.listMsg()
+            } else if (response.data === 1){
+              this.input_value = ''
+              this.listMsg()
+              this.$message({
+                message: '您是第一位给我留言的用户，谢谢~',
+                type: 'success',
+                duration: 0,
+                showClose: true,
+              })
             } else {
-              this.$message.error("保存失败")
+              this.$message.error("保存失败，请联系军仔")
             }
           }
       ).catch(err => {

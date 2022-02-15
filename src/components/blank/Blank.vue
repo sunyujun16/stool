@@ -9,21 +9,21 @@ export default {
   name: "Blank",
   data() {
     return {
-      fromPath: 'haha',
+      fromPath: '/',
     }
   },
   mounted() {
-    // alert('正搁那儿跳转......')
+    // console.log('正搁那儿跳转......' + this.fromPath)
+  },
+  activated() {
+    if (this.consts.CONSOLE) console.log('Blank activated: '+this.fromPath)
     setTimeout(() => {
-      this.$router.push({
-        path: this.fromPath
-      })
+      this.$router.back()
     }, 100)
-
   },
   beforeRouteEnter(to, from, next) {
     next(vm => {
-      if (vm.consts.CONSOLE) console.log(from)
+      if (vm.consts.CONSOLE) console.log('跳转来自于：' + from.path)
       vm.fromPath = from.path;
     });
   },
