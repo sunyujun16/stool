@@ -4,7 +4,7 @@
         title="我的故事"
         :visible.sync="drawers.resume"
         :direction="direction"
-        :before-close="handleClose"
+        :before-close="handleCloseForResume"
         size="40%"
         @open="pushResume"
         :modal="false"
@@ -137,6 +137,11 @@ export default {
   methods: {
     handleClose(done) {
       // if (confirm("确定关闭吗?"))
+      // this.$router.back()
+      done();
+    },
+    handleCloseForResume(done) {
+      // if (confirm("确定关闭吗?"))
       this.$router.back()
       done();
     },
@@ -236,7 +241,7 @@ export default {
 <style scoped>
 /*控制其他区域的颜色*/
 .el-drawer__wrapper {
-  background-color: rgba(1, 1, 1, 0.7);
+  background-color: rgba(1, 1, 1, 0.8);
 }
 
 /*一个也不好使*/

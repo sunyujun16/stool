@@ -97,7 +97,7 @@ export default {
 
     };
     var validatePass2 = (rule, pwd2, callback) => {
-      console.log(pwd2 + " ------ pass02 ------")
+      if (this.consts.CONSOLE) console.log(pwd2 + " ------ pass02 ------")
       if (pwd2 === '') {
         callback(new Error('请再次输入密码'));
       } else if (pwd2 !== this.ruleForm.pass) {
@@ -160,7 +160,7 @@ export default {
                 withCredentials: false, // 注册的时候，肯定没登录，并且不会被拦截。那么何必带cookies呢。
               }
           ).then(response => {
-            console.log("收到响应，状态码：" + response.status)
+            if (this.consts.CONSOLE) console.log("收到响应，状态码：" + response.status)
             // 这是登录用的，注册成功应该给个提示，然后弹出登录页
             this.$message({
               customClass: 'noticeMsg',

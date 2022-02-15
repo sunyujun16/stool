@@ -2,7 +2,7 @@
   <div class="item-div" id="todoItem"
        @mouseover="setInRange"
        @mouseout="setOutRange">
-    <img src="@/assets/img/priscilla-du-preez-6tCiSN8LX7w-unsplash.jpg"
+    <img src="http://alifile.sunyujun.com/stool_base/basic/priscilla-du-preez-6tCiSN8LX7w-unsplash.jpg"
          alt="nan"
          :class="itemImageClass"
     />

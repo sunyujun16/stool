@@ -2,7 +2,7 @@
   <div class="item-div"
        @mouseover="setInRange"
        @mouseout="setOutRange">
-    <img src="@/assets/img/dariusz-sankowski-mj2NwYH3wBA-unsplash-s-der.jpg"
+    <img src="http://alifile.sunyujun.com/stool_base/basic/dariusz-sankowski-mj2NwYH3wBA-unsplash-s-der.jpg"
          alt="nan"
          :class="itemImageClass"
     />

@@ -23,15 +23,14 @@ export default {
   name: "TodoBottom",
   props: ['todos'],
   mounted() {
-    // 自动保存，先关掉
-    // this.saveTimer = setInterval(() => {
-    //   if (this.$store.state.globalOptions.login) { // 仅在登录状态下进行保存操作
-    //     this.saveToServer()
-    //     this.$message.success("自动保存")
-    //   }
-    // }, this.consts.SAVE_INTERVAL)
-
-    // 上车
+    // 自动保存
+    this.saveTimer = setInterval(() => {
+      if (this.$store.state.globalOptions.login) { // 仅在登录状态下进行保存操作
+        this.saveToServer()
+        this.$message.success("自动保存")
+      }
+    }, this.consts.SAVE_INTERVAL)
+    // 注册全局事件
     this.$bus.$on("saveToServer", this.saveToServer)
 
   },

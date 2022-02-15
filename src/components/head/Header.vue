@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div style="z-index: 100">
     <el-header class="hf-bgcolor" height="45px">
       <div style="float: left">
         <span class="headLink" @click="TAB_RESUME(true)">站长简介</span>

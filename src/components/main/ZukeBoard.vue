@@ -1,6 +1,6 @@
 <template>
   <div class="item-div" id="zukeItem" @mouseout="setOutRange" @mouseover="setInRange">
-    <img src="@/assets/img/annie-spratt-HwsRkHfSU60-unsplash (1).jpg" alt="nan"
+    <img src="http://alifile.sunyujun.com/stool_base/basic/annie-spratt-HwsRkHfSU60-unsplash%20%281%29.jpg" alt="nan"
          :class="itemImageClass"/>
     <span class="itemText" @click="note">ZukeSay</span>
   </div>

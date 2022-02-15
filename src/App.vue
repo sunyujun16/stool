@@ -9,7 +9,7 @@
     </div>
     <!--    <img src="./assets/img/benaja-germann-QbdzCEXy5vs-unsplash-021.jpg" alt="nah" class="background-img" id="fuck"-->
     <!--         :style="imgStyle" ref="backImg"> &lt;!&ndash;    &ndash;&gt;-->
-    <img src="./assets/img/benaja-germann-QbdzCEXy5vs-unsplash-021.jpg" alt="nah" class="background-img" id="fuck">
+    <img src="http://alifile.sunyujun.com/stool_base/basic/benaja-germann-QbdzCEXy5vs-unsplash-021.jpg" alt="nah" class="background-img" id="fuck">
 <!--    <img src="./assets/img/olivier-guillard-xnGu_KGrqX8-unsplash.jpg" alt="nah" class="background-img" id="fuck">-->
 <!--    <div id="bg-cover"></div>-->
   </div>
