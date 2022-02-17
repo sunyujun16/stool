@@ -1,12 +1,13 @@
 <template>
   <div class="item-div"
        @mouseover="setInRange"
-       @mouseout="setOutRange">
+       @mouseout="setOutRange"
+       @click="note">
     <img src="http://alifile.sunyujun.com/stool_base/basic/dariusz-sankowski-mj2NwYH3wBA-unsplash-s-der.jpg"
          alt="nan"
          :class="itemImageClass"
     />
-    <span class="itemText" style="top: -230px"  @click="note">SunBlog</span>
+    <span class="itemText" style="top: -230px">SunBlog</span>
   </div>
 </template>
 

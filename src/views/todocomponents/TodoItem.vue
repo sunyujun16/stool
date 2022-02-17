@@ -26,7 +26,7 @@ export default {
   },
   methods: {
     deleteItem() {
-      console.log(this.todo.id)
+      if (this.consts.CONSOLE) console.log('id',this.todo.id)
       // if (confirm("确定要删除？不带后悔的奥。"))
       // 触发删除事件
       this.$bus.$emit("fuck_delOneTodo", this.todo.id)

@@ -258,6 +258,7 @@ body {
   /*margin-top: 50px;*/
   /*position: relative;*/
   /*background-color: rgba(0,0,0,0.5);*/
+  height: 400px;
 }
 
 #todoApp::-webkit-scrollbar {
