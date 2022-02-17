@@ -5,12 +5,12 @@
       <!-- 已失败的操作：@click="selectAll()" -->
       <span>已完成{{ todosDoneCount }}</span>
       <span>/  全部{{ todos.length }}</span>
-<!--      <span class="warn" v-show="warn">请慎重全选，误操作不能撤销</span>-->
+      <!--      <span class="warn" v-show="warn">请慎重全选，误操作不能撤销</span>-->
     </label>
     <button class="btn btn-danger" style="width: 60px; margin-left: 5px" @click="saveAndQuit">退出</button>
     <button class="btn btn-danger" style="width: 60px; margin-left: 5px" @click="saveToServer">同步</button>
     <button class="btn btn-danger" style="width: 60px; margin-left: 5px" @click="withDraw">撤销</button>
-    <button class="btn btn-danger" style="width: 100px" @click="deleteDoneTodos">删除选中项</button>
+    <button class="btn btn-danger" style="width: 80px" @click="deleteDoneTodos">删除已选</button>
     <!--    <br/>-->
 
   </div>
@@ -78,10 +78,10 @@ export default {
       this.warn = false
     },
     saveAndQuit() {
-      if (confirm("宁确定要退出吗？")) {
-        this.saveToServer(null, true)
-        this.$bus.$emit("jumpToMain")
-      }
+      // if (confirm("宁确定要退出吗？"))
+      this.saveToServer(null, true)
+      this.$bus.$emit("jumpToMain")
+
     },
     // mute是控制是message的显示的，在不通过点击同步按钮触发时，不显示message。
     /**

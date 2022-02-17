@@ -85,7 +85,7 @@
     <div class="resume resume-right">
       <img src="http://alifile.sunyujun.com/stool_base/resume/jon-tyson-sMHVg2KBkLc-unsplash.jpg" alt="pro.jpg">
       <div class="resume-description"  style="text-align: left">
-        <span><b style="font-size: 20px">2022年 任务</b>1：正式开启程序员生涯。</span>
+        <span><b style="font-size: 20px">2022目标</b> - 01：正式开启程序员生涯。</span>
       </div>
       <div class="clear-float"></div>
 
@@ -97,7 +97,7 @@
     <div class="resume resume-left">
       <img src="http://alifile.sunyujun.com/stool_base/resume/marathon.jpg" alt="marathon.jpg" style="margin-top: 10px">
       <div class="resume-description">
-        <span><b style="font-size: 20px">2022年 任务</b>2：用145以内的成绩完赛一场半马。</span>
+        <span><b style="font-size: 20px">2022目标</b> - 02：用145以内的成绩完赛一场半马。</span>
       </div>
       <div class="clear-float"></div>
 
@@ -117,6 +117,15 @@ export default {
 <style scoped>
 .global-resume::-webkit-scrollbar {
   display: none;
+}
+
+.resume img {
+  box-shadow: 4px 4px 10px rgba(50,50,50,.5) ;
+  /*考虑浏览器兼容性*/
+  -moz-box-shadow: 4px 4px 10px rgba(50,50,50,.5);
+  -webkit-box-shadow: 4px 4px 10px rgba(50,50,50,.5) ;
+  /*display: none;*/
+  border-radius: 8px;
 }
 
 .resume-left img {
