@@ -142,7 +142,7 @@ export default {
     }
   },
   // 此时页面中呈现的DOM不是Vue的DOM，此时Vue的虚拟DOM还在后边摸鱼，没有转换成真实DOM
-  beforeMount() {
+  activated() {
     // 立flag，进入todoAPP
     this.$store.commit('globalOptions/ENTER_TODO_APP')
 
@@ -182,7 +182,7 @@ export default {
               if (this.consts.CONSOLE) console.log('local存储为空，读取服务器数据')
               this.todos = serverTodos;
             } else if (!serverTodos || serverTodos.length === 0) {
-              // 二、local非空，但服务器为空，以local为准, todo 但要判断用户名
+              // 二、local非空，但服务器为空，以local为准
               this.todos = localTodos;
             } else {
               if (this.isListEqual(localTodos, serverTodos)) {

@@ -81,6 +81,8 @@ export default {
       this.LOGOUT();
       this.CLEAR_USER_INFO();
 
+      // 此处应该刷新当前页面，emit(pushToBlank)，否则影响本地名为todo的localStorage，不过不影响用户使用，所以算了，下次一定。
+
       // 发送请求，清除后端的相应session对象。
       let _this = this
       this.$nextTick(() => {
