@@ -147,7 +147,7 @@ export default {
         if (this.consts.CONSOLE) console.log("验证结果 *********** ：", valid)
         if (valid) {
           // alert('submit!');
-          let url = this.$store.state.zukeOptions.zukeHost + '/register';
+          let url = this.$store.state.todoOptions.todoHost + '/register';
           let _this = this;
           // 发送axios请求/POST,访问登录页，返回啥呢？返回一个token？sessionId？
           if (this.consts.CONSOLE) console.log("发送请求：")
